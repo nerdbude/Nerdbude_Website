@@ -1,0 +1,132 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[twitter] @PH_0x17
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+
+    <meta property="og:url" content="https://www.nerdbude.com/vimb.html">
+    <meta property="og:title" content="VIMB">
+    <meta property="og:description" content="Ein Webbrowser der auf Vim Keybindings aufbaut.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~ VIMB ~~</h1></center>
+  <center><h2>** VIM WEB BROWSER **</h2></center>
+  <center><st>[PRO] | [20200101] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Hier gab es schon länger nichts mehr auf der NERDBUDE. Das hat zwei einfache Gründe. Der erste: Ich hatte hier eine kleine Infrastruktur-Apokalypse. Mir ist meine NixOS Instanz hier abgeraucht. Der perfekte Zeitpunkt um mal den neuen grafischen Installer von NixOS zu testen und die <b>configuration.nix</b> und die <b>xmonad.hs</b> aufzuräumen. Der zweite Punkt der hier gerade Zeit verschlingt ist das NB100 Cyberdeck. Dazu gibt's dann hier natürlich auch noch was zu lesen. Dank der ersten Problematik konnte ich aber auch neue Tools finden so z.B. <b>VIMB</b>.<br>
+<br>
+<h3>VIMB</h3>
+Immer weiter getrieben von der suche nach dem möglichst minimalistischen aber dennoch maximal produktivem System, sind die gängigen GUI Webbrowser nicht grade die erste Wahl. So bin ich auf <b>VIMB</b> gestoßen.
+<b>VIMB</b> ist ein Webbrowser ohne viel Bloat und das tolle daran ist, er beruht komplett auf Vim-Keybindings und wird auch Vim-typisch bedient. <b>VIMB</b> lässt sich also wunderbar in den täglichen Workflow integrieren.
+<br><br>
+<h3>INSTALLATION</h3>
+<b>VIMB</b> ist in den nix-packages vorhanden, d.h. ich kann sie direkt in die <b>configuration.nix</b> einbinden und per rebuild installieren.
+<br><br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">environment.systemPackages = with pkgs; [</span></ln>
+<ln><span class="unixshell">vimb</span></ln>
+<ln><span class="unixshell">...</span></ln>
+<ln><span class="unixshell">];</span></ln>
+<ln><span class="unixshell">in {</span></ln>
+</pre>
+</div>
+<br><br>
+Wie immer nach Änderungen an der <b>configuration.nix</b> braucht es den rebuild: <b>nixos-rebuild switch</b>.<br>
+Danach kann <b>VIMB</b> benutzt werden.<br>
+<br>
+<h3>USAGE</h3>
+Entweder ihr startet <b>VIMB</b> per Terminal oder ihr definiert euch einen Shortcut innerhalb der <b>xmonad.hs</b>. Um <b>VIMB</b> per Terminal zu starten reicht folgendes Command:<br>
+<br><br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">vimb</span></ln>
+</pre>
+</div>
+<br><br>
+danach ist der Browser direkt benutzbar. Die Frage ist nur wie?<br>
+Ganz einfach. <b>VIMB</b> lässt sich bedienen wie Vim, d.h. bei jeder Interaktion braucht ihr den Vim-typische "<b>:</b>". So kann beispielsweise eine Website mit folgendem Befehl geöffnet werden:<br>
+<br>
+<span class="label">VIMB</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+</pre>
+</div>
+<br><br>
+Das öffnet euch (in diesem Fall wunderschöne) Website.
+Nun wollt ihr aber vielleicht doch etwas mehr machen als einzelne Websites aufrufen. Dazu bringt <b>VIMB</b> eine ganzes Set an Commands mit.
+<br><br>
+<span class="label">VIMB</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+<ln><span class="unixshell">:open https://www.nerdbude.com</span></ln>
+</pre>
+</div>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

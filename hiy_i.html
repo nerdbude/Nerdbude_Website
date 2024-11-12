@@ -1,0 +1,122 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[twitter] @PH_0x17
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+
+    <meta property="og:url" content="https://www.nerdbude.com/hiy_i.html">
+    <meta property="og:title" content="Host it yourself (1)">
+    <meta property="og:description" content="Weg vom 0815 Hoster - hin zum eigenen Server.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~ HIY (I) ~~</h1></center>
+  <center><h2>** DER WEG ZUM EIGENEN SERVER **</h2></center>
+  <center><st>[HOW] | [20221124] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Schon beim Start der <b>NERDBUDE</b> hatte ich geschrieben, dass selbige irgendwann mal auf einen eigenen Server umzieht. Nun - irgendwann ist jetzt, bzw. die nächsten Wochen.
+Wie es sich gehört, kommt hier natürlich der komplette Ablauf und alles was Unterwegs passiert mit rein.
+<br><br>
+<h3>STATUS QUO</h3>
+Aktuell läuft die <b>NERDBUDE</b> auf einem simplen Webspace beim Wald-und-Wiesen-Webhoster Strato.
+Nicht falsch verstehen - Strato macht seinen Job gut und zuverlässig, sonst wäre die <b>NERDBUDE</b> da nicht ~2 Jahre rumgelegen.
+Irgendwann muss aber irgendwie was neues her und das passiert hier die nächsten Wochen.
+Es braucht natürlich etwas Vorüberlegung und Strukturierung bevor es losgeht. Die <b>NERDBUDE</b> als statische HTML site,
+ist natürlich etwas gewuchert und in Richtungen gewachsen die vielleicht nicht unbedingt Sinn machen oder annähernd strukturiert sind.
+Deswegen gilt es allen Kram zusammen tragen, der im Hintergrund läuft und das ganze in eine bessere Struktur zu pressen.
+<br><br>
+<h3>PLANUNG</h3>
+Der Vorteil des jetzigen Hostings ist, dass alles an einem Ort liegt (das wird sich ändern).
+Also am Anfang erstmal alles zusammentragen:<br><br>
+- Domains<br>
+- Subdomains<br>
+- Mail Adressen<br>
+- Files<br>
+<br>
+Der zweite Schritt - ausmisten was nicht mehr gebraucht wird.<br>
+Wenn also alles aufgeräumt ist hab ich einen wunderbaren Pool an Kram der jetzt neu strukturiert werden kann/soll/muss.<br>
+Natürlich soll die <b>NERDBUDE</b> weiterhin der zentrale Cortex bleiben von dem sich alle Synapsen abzweigen. Im groben ergibt sich folgendes Schema:
+<br><br>
+<center><img src="https://www.nerdbude.com/images/nbserver_overview.png"></center>
+<br><br>
+Also wie gesagt ist die <b>NERDBUDE</b> die Basis. Auf der <b>NERDBUDE</b> gibt es zum einen den "Blog"-Teil, also der Part wo ihr auch das hier lest.
+Der <a href="https://www.clickclackhack.de">CCH!</a> liegt auf Ebene 2 unter der <b>NERDBUDE</b> - ist aber im Prinzip auch nichts anderes als ein Blog mit RSS Feed.
+Als neue Funktion soll die <b>NERDBUDE</b> einen eigenen Git Connector bekommen. GitHub schön und gut, aber selbst gehostet ist es besser.
+Ich hab im Vorfeld etwas mit <a href="https://www.gitea.io">Gitea</a> rumgespielt und wollte Gitea auch in der <b>NERDBUDE</b> integrieren.
+Die Idee hab ich mal eine Weile in meinem Kopf arbeiten lassen und bin zu dem Entschluss gekommen, dass es gar kein ganzes Gitea braucht.
+Gitea bringt eine ganze Reihe an Funktionen mit die es nicht braucht. Ich brauche keine komplette User-Verwaltung, kein Interface und so weiter und sofort.
+Git bietet zum Glück die Möglichkeit einen - nennen wir es mal - Bare-Git Server zu hosten und exakt der wird es werden. So könnt ihr den Krempel nutzen oder mitmachen.
+<br><br>
+Der zweite wichtige Punkt sind die Domains. Aktuell liegen diese auch bei Strato und sollen zu INWX umziehen. Es geht also effektiv um die [nerdbude.com], [clickclackhack.de] und die [damnfinekeyboards.com].
+Damit wären Website, Podcast und Schmuddelheft abgedeckt.<br>
+<br>
+Wenn ich schon dabei bin das ganze neu aufzubauen, schraub ich mal etwas am Hirn der <b>NERDBUDE</b> rum. Aktuell ist die <b>NERDBUDE</b> plain HTML mit CSS - nicht mehr, nicht weniger. Kein JS oder CMS im Hintergrund.
+Das ganze hat einen Nachteil. Wenn ich am Menü etwas ändern möchte, muss ich durch alle Files durch und händisch das Menü ändern.
+Das ist natürlich mit jedem neuen Post, ein Arbeitsschritt mehr. Ich hab mich bei euch mal etwas umgehört was so CMS technisch abgeht.
+Da war 'ne ganze Menge foo dabei, der echt spannend ist und irgendwann mal zum Einsatz kommen könnte. Nach etwas Recherche und dem Hinweis von <a href="https://chaos.social/@danielzenzes">Daniel</a>
+Auch cooles Zeug aber immer noch mit Kanonen auf Spatzen geschossen.
+Also - Selberbauen. Wenn alles klappt fällt hinten dann das Tool namens <b>3SB</b> raus, aber dazu wird es hier auch noch was geben.
+Für die <b>NERDBUDE</b> heißt das, dass die Folder Struktur im Hintergrund aufgeräumt wird und auch die Verlinkungen innerhalb der Static HTML Files muss angepasst werden. Wenn euch also irgendwo Linking-Fails auffallen - gerne Bescheid geben.
+<br><br>
+Die Dokumentation des Umzugs wird es hier als kleine Miniserie geben, damit ihr das auch selber machen könnt. Folgende Teile wird es geben:
+<br><br>
+PARTS:<br>
+<a href="https://www.nerdbude.com/hiy_i.html">[01] - Intro</a><br>
+<a href="https://www.nerdbude.com/hiy_ii.html">[02] - Vorraussetzungen</a><br>
+<a href="https://www.nerdbude.com/hiy_iii.html">[03] - Webserver</a><br>
+<a href="https://www.nerdbude.com/hiy_iv.html">[04] - Mailserver</a> <br>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

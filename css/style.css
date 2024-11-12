@@ -12,20 +12,19 @@
 [github] https://www.github.com/nerdbude
 */
 @font-face {
-   font-family: 'share_tech_monoregular';
-   src: url('/fonts/ShareTechMono-Regular.ttf') format('ttf'),
-   	url('/fonts/sharetechmono-regular-webfont.woff2') format('woff2'),
-	url('/fonts/sharetechmono-regular-webfont.woff') format('woff');
+   font-family: 'berkeley';
+   src: url('/fonts/BerkeleyMono-Regular.woff') format('woff'),
+	url('/fonts/BerkeleyMono-Regular.woff2') format('woff2');
 	font-weight: normal;
 	font-style: normal;
 }
 
 body {
-  font-family: 'share_tech_monoregular';
-  color: #d7d7d7;
+  font-family: 'berkeley';
+  color: #F8F8F2;
   font-size: 14px;
   font-weight: 100;
-  background-color: #272727;
+  background-color: #262626;
   min-height: 100%;
   {-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;}
 }
@@ -33,6 +32,20 @@ body {
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+table {
+  width: 100%;
+  font-size: 14px;
+}
+
+tp {
+  color: #8d8d8d;
+}
+
+st {
+  color: #8d8d8d;
+  font-size: 14px;
 }
 
 pre {
@@ -44,52 +57,169 @@ ul {
   padding: 0;
 }
 
-/* for the animations */
-@media (prefers-reduced-motion: no-preference) {
-
-	@keyframes reveal {
-		from { width: 2em; } /* Width of ::before */
-		  to { width: 100%; }
-	}
-	#terminal {
-		overflow: hidden;
-		white-space: nowrap;
-		animation: reveal 4s linear;
-		text-overflow: "|";
-	}
-	#terminal::after {
-		content: "_";
-		animation: flash 0.5s step-end infinite;
-	}
+hr {
+  color: #F8F8F2;
+  display: block;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  width: 90%;
+  border-style: solid;
+  border-width: 1px;
 }
 
-h1 {color: #ffffff; background-color: #272727;}
-h2 {color: #afd75f; background-color: #272727; margin-bottom: 0px;}
-h3 {color: #afd75f; background-color: #272727;}
-
-h1::before {color: #afd75f; content: "$"}
-h1::after {color: #afd75f; content: "_"; animation: flash 0.5s step-end infinite;}
-
-h2::before {color: #afd75f; content:"~$: "}
-
-time {color: #ff63b3; font-size: 12px;}
-time::before {color: #6e6e6e; content:"└──┤ [last.modified:]──[ "; font-size: 12px; margin-left: 15px;}
-time::after {color: #6e6e6e; content:" ]"; font-size: 12px;}
-
-tool {color: #afd75f; font-size: 12px;}
-tool::before {color: #6e6e6e; content:"├── ["; font-size: 12px; margin-left: 15px;}
-tool::after {color: #6e6e6e; content:" ] "; font-size: 12px;}
-
-toollang {color: #ff63b3; font-size: 12px;}
-toollang::before {color: #6e6e6e; content:"── ["; font-size: 12px;}
-toollang::after {color: #6e6e6e; content:" ] ──── "; font-size: 12px;}
+/* for the animations */
 
 
-edit {color: #ff1f4f;}
+h1 {font-size: 16px; padding: 0px; margin: 0px; color: #50FA7B;}
+h2 {font-size: 14px; padding: 0px; margin: 0px;}
+h3 {font-size: 14px; padding: 0px; margin: 0px;}
+
+time {color: #ff0087; font-size: 12px;}
+time::before {color: #dadada; content:"└──┤ [last.modified:]──[ "; font-size: 12px; margin-left: 15px;}
+time::after {color: #dadada; content:" ]──[ CC BY-NC-ND ]"; font-size: 12px;}
+
+ultra {color: #ff0087; font-size: 12px;}
+ultra::before {color: #dadada; content:"└──┤ [LINKS:]──[ "; font-size: 12px; margin-left: 15px;}
+ultra::after {color: #dadada; content:" ]──[ ♥ ]"; font-size: 12px;}
+
+tool {color: #50FA7B; font-size: 12px;}
+tool::before {color: #dadada; content:"├── ["; font-size: 12px; margin-left: 15px;}
+tool::after {color: #dadada; content:" ] "; font-size: 12px;}
+
+toollang {color: #ff0087; font-size: 12px;}
+toollang::before {color: #dadada; content:"── ["; font-size: 12px;}
+toollang::after {color: #dadada; content:" ] ──── "; font-size: 12px;}
+
+div.gallery {
+  margin: 10px;
+  float: left;
+  /* width: 180px; */
+}
+
+div.gallery img {
+  width: 200px;
+  height: auto;
+}
+
+div.gallery img:hover {
+  border: 1px solid #afd75f;
+}
+
+edit {color: #ff0087;}
+
+.ascii-art {
+    font-size: 6px;
+    white-space: pre;
+    color: #afd75f;
+}
 
 #terminal {overflow: hidden;
   white-space: nowrap;
   animation: reveal 4s linear;}
+
+#firstbox {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 1px;
+  font-size: 14px;
+}
+
+#secondbox {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 1px;
+  font-size: 14px;
+}
+
+#thirdbox {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 1px;
+  font-size: 14px;
+}
+
+#backbar {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  font-size: 14px;
+}
+
+#contentbox {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 0px;
+  font-size: 14px;
+}
+
+#titlebox {
+  width: 40%;
+  margin: 0 auto;
+  align-content: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 1px;
+  font-size: 16px;
+}
+
+/* ABOUT */
+
+.aboutlabel		{
+     background-color: #F8F8F2;
+		 border-style: solid;
+		 border-width: 1px;
+		 border-color: #F8F8F2;
+		 padding-left: 15px;
+		 padding-right: 15px;
+		 color: #1c1c1c;
+     font-size: 14px;
+	 }
+
+#whitebox {
+  margin: 0 auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 15px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 1px;
+  font-size: 16px;
+}
+
+/* ----------- */
+
+
+#footer {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 10px;
+  border-style: solid;
+  border-color: #F8F8F2;
+  border-width: 1px;
+  background-color: #262626;
+  font-size: 14px;
+  position: inherit;
+  bottom: 0;
+  right: 0;
+  margin-bottom: 10px;
+}
 
 span {
   padding: 0;
@@ -97,109 +227,130 @@ span {
 }
 
 a {
-  text-decoration: underline;
-  color: #afd75f;
+  color: #50FA7B;
+  font-size: 14px;
   transition-duration: 0.2s;
   padding-top: 3px;
 }
 
 a.front {
   text-decoration: none;
-  color: #d7d7d7;
+  color: #e4e4e4;
+  font-size: 14px;
   transition-duration: 0.2s;
   padding-top: 3px;}
 
 a:hover {
-  color: #272727;
-  background-color: #afd75f;
+  text-decoration: underline;
+  color: #1c1c1c;
+  font-size: 14px;
+  background-color: #50FA7B;
 }
 
 a.front:hover {
-  color: #272727;
-  background-color: #afd75f;
+  color: #262626;
+  font-size: 14px;
+  background-color: #50FA7B;
 }
 
 a:active {
-  color: #8787ff;
+  color: #0087ff;
+  font-size: 14px;
 }
 
 a.front:active {
-  color: #8787ff;
+  color: #0087ff;
+  font-size: 14px;
 }
 
 a.tag {
   text-decoration: none;
-  color: #874fff;
+  color: #FF79C6;
   transition-duration: 0.2s;
   padding-top: 3px;
+  font-size: 14px;
 }
 
 a.tag:hover {
-  color: #272727;
-  background-color: #874fff;
+  color: #262626;
+  background-color: #FF79C6;
+  font-size: 14px;
 }
 
 a.tag:active {
-  color: #874fff;
+  color: #FF79C6;
+  font-size: 14px;
 }
 
 p {
   padding: 0;
   margin: 10px 0 30px 0;
+  font-size: 14px;
 }
 
 img {
   max-width: 100%;
-  margin-bottom: 20px;
+  margin-left: 20px;
   margin-right: 20px;
+  margin-bottom: 10px;
 }
 
-b {color: #afd75f; background-color: #272727;}
+.adminpicture {
+	padding-right: 15px;
+	padding-left: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 
+b {
+  color: #FF79C6;
+  background-color: #262626;
+  font-size: 14px;
 }
 
 header {
   width: 100%;
   top: 0;
-  background-color: #272727;
+  background-color: #262626;
   height: auto;
+  font-size: 14px;
   padding-bottom: 10px;
   margin-bottom:10px;
   letter-spacing: 0px;
-  border-bottom: 1px dashed #afd75f;
+  border-bottom: 1px dashed #50FA7B;
 }
 
 th {
   text-align: left;
   font-weight: 100;
   padding-right: 15px;
+  font-size: 14px;
 }
 
 th.desc {
-  color: #8a8a8a;
+  color: #dadada;
+  font-size: 14px;
 }
-th.date {color: #8a8a8a;}
-th.time {color: #8a8a8a;}
-th.change {color: #d7d7d7;}
-th.red {color: #ff5f5f;}
-th.green {color: #5fd75f;}
-th.yellow {color: #ffff5f;}
-th.user {color: #8787ff;}
+th.date {color: #dadada; font-size: 14px;}
+th.time {color: #dadada; font-size: 14px;}
+th.change {color: #e4e4e4; font-size: 14px;}
+th.red {color: #ff005f; font-size: 14px;}
+th.green {color: #50FA7B; font-size: 14px;}
+th.yellow {color: #ffff5f; font-size: 14px;}
+th.user {color: #0087ff; font-size: 14px;}
 
 #content {
   margin-left: 10%;
   margin-right: 10%;
+  font-size: 14px;
 }
 
-#footer {
-  width: 200px;
-  /*position: fixed;*/
-  bottom: 0;
-  right: 0;
-  margin-bottom: 10px;
-  z-index: 1;
-  background-color: #272727;
+#pictures {
+  margin-left: 10%;
+  margin-right: 10%;
 }
+
+
 
 #cssyn {
   background: transparent;
@@ -207,48 +358,60 @@ th.user {color: #8787ff;}
   margin: 0 0 2px 0;
   width: 100%;
   border-style: solid;
-  border-color: #afd75f;
+  border-color: #50FA7B;
   border-width: 1px;
   counter-reset: line;
+  font-size: 14px;
   }
 
-pre		{font-family: 'Share Tech Mono', monospace;
-		 padding-left: 15px; white-space: pre-line;}
-ln		{font-family: 'Share Tech Mono', monospace;
-        white-space:pre-wrap;}
+pre		{
+  font-family: 'berkeley';
+	padding-left: 15px;
+  white-space: pre-line;
+  font-size: 14px;
+}
+
+ln {
+  font-family: 'berkeley';
+  white-space:pre-wrap;
+  font-size: 14px;
+}
 
 ln::before 	{content: counter(line, decimal-leading-zero);
-		 background: #282828;
+		 background: #262626;
 		 color: #444444;
 		 padding: 0 10px 0;
 		 margin: 0 10px 0 0;
 		 border-right: 1px solid #444444;
 		 counter-increment: line;
 		 -webkit-user-select: none;
+     font-size: 14px;
 	 	}
 
-.label		{background-color: #afd75f;
+.label		{background-color: #50FA7B;
 		 border-style: solid;
 		 border-width: 1px;
-		 border-color: #afd75f;
+		 border-color: #50FA7B;
 		 padding-left: 15px;
 		 padding-right: 15px;
-		 color: #272727;
+		 color: #262626;
+     font-size: 14px;
 	 }
 
 
-.unixshell 	{color: #87afd7; font-style: italic;}
+.unixshell 	{color: #87afd7;}
 .comment	{color: #8a8a8a;}
 .url		{color: #00ffd7; font-style: italic; text-decoration: underline;}
 .value		{color: #875fff;}
-.header-file	{color: #afd75f;}
+.header-file	{color: #50FA7B;}
 .selector	{color: #ff5f5f;}
 .subselector	{color: #ffff5f;}
 .unit		{color: #ff5f87;}
+.name   {color: #ff63b3;}
 
-.tag            {color: #afd75f;}
+.tag            {color: #50FA7B;}
 .important      {margin-left: -18px;}
-.link		{color: #afd75f; background: #272727;}
+.link		{color: #50FA7B; background: #272727;}
 .title          {display: inline-block; margin-bottom: 20px; margin-top: 20px;}
 .subtitle       {display: inline-block; margin: 20px 0;}
 .filter         {display:block; margin-bottom: 30px; margin-top: -20px;}

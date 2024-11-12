@@ -1,0 +1,274 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[twitter] @PH_0x17
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+
+    <meta property="og:url" content="https://www.nerdbude.com/hiy_iv.html">
+    <meta property="og:title" content="Host it yourself (4)">
+    <meta property="og:description" content="Der Mailserver - Eine Odyssey.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~ HIY (IV) ~~</h1></center>
+  <center><h2>** MAILSERVER **</h2></center>
+  <center><st>[HOW] | [20230526] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Die <b>NERDBUDE</b>, der <b>CCH!</b> und das <b>DFK</b> laufen nun schon seit geraumer Zeit auf dem NixOS Server und das stabil (vorausgesetzt ich
+zerschiesse nicht irgendetwas -.- ). Der letzte Punkt der noch fehlte waren die Mails ... und das hat mich "etwas" Zeit gekostet.
+Deswegen gibt es jetzt hier das Update auch nur drei Monate später - aber die Mails funktionieren jetzt.
+<br>
+<h2>SNM - Simple NixOS Mailserver</h2>
+<br>
+NixOS sei Dank gibt es eine fertige Implementierung eines Mailservers und zwar SNM, den Simple NixOS Mailserver.<br>
+Der SNM wird komplett in die <b>configuration.nix</b> integriert und darüber configuriert.<br>
+Die gesamte Dokumentation und Konfiguration gibt es auf <a href="https://nixos-mailserver.readthedocs.io/en/latest/setup-guide.html">SNM - Simple NixOS Mailserver</a>. Es sind ein paar einfache Schritte um den Server aufzusetzen.
+Die einzigen Voraussetzungen sind ein funktionierender Webserver mit public IP, eine Domain und die Möglichkeit einen rDNS Records zu hinterlegen.<br>
+Los geht's.<br>
+<br>
+<h2>1. DNS Record</h2>
+Als erstes wird ein DNS A Eintrag für den Mailserver angelegt. So ist der Mailserver auch von außen erreichbar:<br>
+<br>
+<b>NAME:</b> mail.nerdbude.com<br>
+<b>TTL:</b> 10800<br>
+<b>TYPE:</b> A<br>
+<b>VALUE:</b> deine-ip<br>
+<br>
+Wenn der DNS Eintrag eingerichtet ist, kann per <b>ping</b> getestet werden, ob der der DNS record richtig gesetzt ist:<br>
+<br><br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+	<pre>
+	  <ln><span class="unixshell">ping mail.nerdbude.com </span></ln>
+	  <ln><span class="value">64 bytes from mail.nerdbude.com (162.55.61.209): icmp_seq=1 ttl=46 time=21.3 ms</span></ln>
+	  <ln><span class="value">...</span></ln>
+	</pre>
+</div>
+<br><br>
+Wenn das geglückt ist geht es weiter in die <b>configuration.nix</b>. Hier kommen dir Grundlegenden Einstellungen für den Mailserver rein.<br>
+<br>
+<h2>2. CONFIGURATION.NIX</h2>
+Wie so ziemlich alles, kommt auch der Mailserver in die zentrale <b>configuration.nix</b>.
+<br>
+<br><br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">{ config, pkgs, ... }:</span></ln>
+    <ln><span class="unixshell">{</span></ln>
+    <ln><span class="unixshell">imports = [</span></ln>
+    <ln><span class="unixshell">  (builtins.fetchTarball {</span></ln>
+    <ln><span class="unixshell">    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/A-COMMIT-ID/nixos-mailserver-A-COMMIT-ID.tar.gz";</span></ln>
+    <ln><span class="unixshell">    sha256 = "enter_hashvalue_here";</span></ln>
+    <ln><span class="unixshell">  })</span></ln>
+    <ln><span class="unixshell">];</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">mailserver = {</span></ln>
+    <ln><span class="unixshell">  enable = true;</span></ln>
+    <ln><span class="unixshell">  fqdn = "mail.nerdbude.com";</span></ln>
+    <ln><span class="unixshell">  domains = [ "nerdbude.com" ];</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  loginAccounts = {</span></ln>
+    <ln><span class="unixshell">      "post@example.com" = {</span></ln>
+    <ln><span class="unixshell">          hashedPasswordFile = "/path/to/passwordfile";</span></ln>
+    <ln><span class="unixshell">          aliases = ["@example.com"];</span></ln>
+    <ln><span class="unixshell">      };</span></ln>
+    <ln><span class="unixshell">  };</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  certificateScheme = 3;</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+    <ln><span class="unixshell">}</span></ln>
+</pre>
+</div>
+<br>
+<br>
+Sieht erstmal nach viel aus, ist aber recht überschaubar. Schauen wir uns das mal an.<br>
+Im ersten Block legen wir erstmal die Quelle für alle benötigten Parts fest und verifizieren das ganze mit dem Hashvalue:<br>
+<br>
+<br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">{ config, pkgs, ... }:</span></ln>
+    <ln><span class="unixshell">{</span></ln>
+    <ln><span class="unixshell">imports = [</span></ln>
+    <ln><span class="unixshell">  (builtins.fetchTarball {</span></ln>
+    <ln><span class="unixshell">    url = "https://gitlab.com/simple-nixos-mailserver/nixos-mailserver/-/archive/A-COMMIT-ID/nixos-mailserver-A-COMMIT-ID.tar.gz";</span></ln>
+    <ln><span class="unixshell">    sha256 = "enter_hashvalue_here";</span></ln>
+    <ln><span class="unixshell">  })</span></ln>
+    <ln><span class="unixshell">];</span></ln>
+</pre>
+</div>
+<br>
+<br>
+Danach wird der Mailserver selber konfiguriert:<br>
+<br>
+<br>
+<br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">mailserver = {</span></ln>
+    <ln><span class="unixshell">  enable = true;</span></ln>
+    <ln><span class="unixshell">  fqdn = "mail.nerdbude.com";</span></ln>
+    <ln><span class="unixshell">  domains = [ "nerdbude.com" ];</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  loginAccounts = {</span></ln>
+    <ln><span class="unixshell">      "post@nerdbude.com" = {</span></ln>
+    <ln><span class="unixshell">          hashedPasswordFile = "/path/to/passwordfile";</span></ln>
+    <ln><span class="unixshell">          aliases = ["@nerdbude.com"];</span></ln>
+    <ln><span class="unixshell">      };</span></ln>
+    <ln><span class="unixshell">  };</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  certificateScheme = 3;</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+    <ln><span class="unixshell">}</span></ln>
+</pre>
+</div>
+<br>
+<br>
+Als ersten Schritt aktivieren wir den Mailserver mit <b>enable = true;</b>. Anschließend wird der Full Qualified Domain Name, kurz <b>FQDN</b>, konfiguriert.
+Das passiert mittels <b>fqdn = "mail.nerdbude.com";</b>. Hier wird die Subdomain mail.nerdbude.com als Adresse für den Mailserverdefiniert. Mit <b>domain</b> geben wir
+dem Server den allgemeinen Domainnamen mit.<br>
+Der nächste Block kümmert sich um die Mail-Adressen und Aliases mit denen Mails verschickt und empfangen werden können. Neben den Accounts bzw. Mailadressen wird aber auch das Passwordfile definiert.
+Im Passwordfile steht ein gehashtes Password, das später zum Login für die Mailadresse dient. Das File lässt sich recht simpel mit folgendem Befehl generieren:<br>
+<br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">nix-shell -p mkpasswd --run 'mkpasswd -sm bcrypt > passwordfile</span></ln>
+</pre>
+</div>
+<br><br>
+Ihr werdet anschließend nach einem Passwort gefragt. Das eingegebene Passwort wird dann gehasht und in das File "passwordfile" geschrieben. Das File packt ihr euch an einen beliebeigen Ort auf dem Server.
+Der letzte Eintrag <b>certificateScheme = 3;</b> regelt noch das SSL Zertifikat für unseren Mailserver. Fertig.<br>
+<br>
+Nicht ganz. Der Mailserver braucht noch einen Eintrag <b>security.acme.certs</b> da für das SSL Zertifikat ein Ansprechpartner bzw. eine dazugehörige Mailadresse notwendig sind.
+<br><br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">security.acme.certs = {</span></ln>
+    <ln><span class="unixshell">  "mail.nerdbude.com".email = "post@nerdbude.com";</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+</pre>
+</div>
+<br><br>
+Jetzt kann die <b>CONFIGURATION.NIX</b> neu gebaut werden mit <b>nixos-rebuild switch</b>. Das ganze sollte durch laufen und ohne Probleme bauen. An dem Punkt ist zumindest auf Seite der NixOS Config alles erledigt.
+Was jetzt noch fehlt sind die letzten DNS Einträge, damit der Mailserver auch seinen Platz im Internet findet.<br>
+<br>
+<br>
+<h2>3. WEITERE DNS EINTRÄGE</h2>
+Als erstes setzen wir den MX Record:<br>
+<br>
+<b>NAME:</b> nerdbude.com<br>
+<b>PRIO:</b> 10<br>
+<b>TYPE:</b> MX<br>
+<b>VALUE:</b> mail.nerdbude.com<br>
+<br>
+Der nächste Eintrag ist der SPF Record:<br>
+<br>
+<b>NAME:</b> nerdbude.com<br>
+<b>TTL:</b> 10800<br>
+<b>TYPE:</b> TXT<br>
+<b>VALUE:</b> v=spf1 a:mail.nerdbude.com -all<br>
+<br>
+Dann noch die DKIM Signatur und der DMARC Record. Der DKIM Record sieht wie folgt aus:<br>
+<br>
+<b>NAME:</b> mail._domainkey.nerdbude.com<br>
+<b>TTL:</b> 10800<br>
+<b>TYPE:</b> TXT<br>
+<b>VALUE:</b> v=DKIM1; p=key<br>
+<br>
+<br>
+Den Key der in den Value kommt, findet ihr unter <b>/var/dkim/nerdbude.com.mail.txt</b>
+<br>
+<br>
+<br>
+Zu guter letzt noch den DMARC Record:<br>
+<br>
+<b>NAME:</b> _dmarc.nerdbude.com<br>
+<b>TTL:</b> 10800<br>
+<b>TYPE:</b> TXT<br>
+<b>VALUE:</b> v=DMARC; p=none<br>
+<br>
+Damit wäre eigentlich alles erledigt und Mails sollten rein und rausgehen. War bei mir leider nicht der Fall.
+<br><br>
+<h2>4. DEBUGGING</h2>
+Der rebuild läuft durch und wirft keine Fehler und natürlich will man gleich probieren ob alles funktioniert.
+Also kommt der ganze Kram in den Mailclient des geringsten Misstrauens und wird enttäuscht. Der Maileingang funktioniert und
+Mails kommen rein. Wenn nun aber Mails rausgehen sollen, hakt es. Die gehen nämlich nicht raus.
+Blöderweise spuckt <b>journalctl -fu postfix</b> einen SPF-Error aus, der mich erstmal in diese Richtung gucken lies.
+Das war aber die falsche Richtung, denn der SPF failed weil schlicht und ergreifend kein ReverseDNS Entry bestand bzw. falsch gelinkt war.
+Also gehen wir in das Provider Web Interface und hinterlegen dort einen rDNS Entry von der IP auf die Domain.
+BOOM! - Die Mails gehen raus.
+<br>
+<br>
+<h2>5. FAZIT</h2>
+Alles in allem ist das aufsetzen des Mailservers wirklich simple. Ein paar DNS Einträge und ein paar Zeilen in die <b>configuration.nix</b> und schon läuft der eigene Mailserver.
+Damit steht die grundlegende Infrastruktur für die <b>NERDBUDE</b>, Podcasts usw.
+Weiter geht es nun mit der Planung der Backups und anderen Spielereien. Mal schauen was da noch so kommt.
+<br>
+<br><br><br>
+PARTS:<br>
+<a href="https://www.nerdbude.com/hiy_i.html">[01] - Intro</a><br>
+<a href="https://www.nerdbude.com/hiy_ii.html">[02] - Vorraussetzungen</a><br>
+<a href="https://www.nerdbude.com/hiy_iii.html">[03] - Webserver</a><br>
+<a href="https://www.nerdbude.com/hiy_iv.html">[04] - Mailserver</a><br>
+<br><br>
+<br>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

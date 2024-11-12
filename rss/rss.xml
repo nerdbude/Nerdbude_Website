@@ -1,16 +1,235 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0">
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
-    <title>$nb / NERDBUDE</title>
+    <title>$NB</title>
     <link>https://www.nerdbude.com</link>
-    <description>alles was klickt, klackt, blinkt und hackt! </description>
+    <description>Der Dump für Hacks, NixOS, Terminal- und Keyboardkram.! </description>
     <language>de-de</language>
     <copyright>PHO</copyright>
+    <lastBuildDate>Wed, 24 Jan 2024 14:50:00 +0100</lastBuildDate>
+    <pubDate>Web, 24 Jan 2024 14:50:00 +0100</pubDate>
     <image>
       <url>https://www.nerdbude.com/images/fav.png</url>
       <title>$NB</title>
-      <link>https://www.nerdbude.com/readme.html</link>
     </image>
+    <item>
+      <title>[KBD] ENDGAME </title>
+      <link>https://www.nerdbude.com/endgame.html</link>
+      <description>Es gibt es - das ENDGAME. Zumindest sagt der Name das. Ich hab das mal gebaut und muss sagen es ist ein tolles Keyboard und macht vieles richtig.</description>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Tue, 15 Oct 2024 11:30:00 +0100</pubDate>
+      <guid>https://www.nerdbude.com/endgame.html</guid>
+     </item>
+<item>
+      <title>[VIM] NixVim </title>
+      <link>https://www.nerdbude.com/nixvim.html</link>
+      <description>Vim ist essentiell. Wenn Vim benutzt wird, wächst die vimrc über die Jahre deutlich an und diverse Plugins sammeln sich. Wenn man nun die gleiche Vim-Umgebung auf allen Maschinen haben will, kann sich das als durchaus Aufwendig gestalten alles umzuziehen. Nun ist da aber NixVim. NixVim kombiniert die Reproduzierbarkeit von NixOS mit der Hochkonfigurierbarkeit von Vim und baut dabei auf NeoVim als Basis. Das macht alles anders und für Vim-Enthusast*innen lohnt es sich definitiv einen Blick drauf zu werfen.</description>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Tue, 12 Nov 2024 08:15:00 +0100</pubDate>
+      <guid>https://www.nerdbude.com/nixvim.html</guid>
+     </item> 
+    <item>
+      <title>[MIS] LIX | AUXOLOTL </title>
+      <link>https://www.nerdbude.com/lix_aux.html</link>
+      <description>NixOS ist ein wunderbares Betriebssystem. Leider ohne wirkliche Alternative. Das hat man die letzten Wochen deutlich zu spüren bekommen. Zum einen wenn MiliTechs als Contributoren und Sponsoren involviert sind, toxisches Verhalten der Community an die Oberfläche gespühlt werden und der Führungsstil des Initiators nicht optimal läuft. Aber nicht nur NixOS ist einzigartig in seiner Form sondern auch die Community. So passiert grade einiges in der NixOS Organisation aber auf Forks entstehen und heben so Nix und NixOS weiter nach oben.</description>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Tue, 07 May 2024 14:00:00 +0100</pubDate>
+      <guid>https://www.nerdbude.com/lix_aux.html</guid>
+     </item> 
+    <item>
+      <title>[MIS] HACKERSPACE NEWS 01</title>
+      <link>https://www.nerdbude.com/hackspace2.html</link>
+      <description>Ich hatte ins Internet gerufen und es gab Antworten. Mittlerweile formen sich Strukturen, es werden Kontakte geknüpft und erste Räumlichkeiten stehen im Gespräch.</description>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Tue, 05 Mar 2024 11:00:00 +0100</pubDate>
+      <guid>https://www.nerdbude.com/hackspace2.html</guid>
+     </item> 
+
+     <item>
+	     <title>[MIS] HACKERSPACE</title>
+	     <link>https://www.nerdbude.com/hackspace.html</link>
+      <description>Ich schreibe eigentlich nie über lokale Themen aber es ist an der Zeit. Reutlingen braucht einen Hackspace und vielleicht lesen das hier Menschen aus der der Region und haben Lust darauf. Wenn ja - im Blogartikel findet ihr alle Kontaktmöglichkeiten. Also los!</description>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Wed, 24 Jan 2024 14:50:00 +0100</pubDate>
+      <guid>https://www.nerdbude.com/hackspace.html</guid>
+      </item> 
+   <item>
+      <title>[KBD] CCH|CON</title>
+      <description>Der CCH! wird physisch und das in Form eines Mechanical Keyboard Meetup im Shackspace in Stuttgart.</description>
+      <link>https://www.nerdbude.com/cchcon.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Mon, 08 Jan 2024 12:44:00 +0000</pubDate>
+      </item> 
+    <item>
+      <title>[KBD] KYB3R_KEYS 0.4 - Neuer Sym-Layers</title>
+      <description>Ich hab KYB3R_KEYS mal auf die Menschheit losgelassen. Ein paar liebe Menschen im CCH! Discord haben sich das Layout angeschaut und natürlich direkt Kritik geäusster. Natürlich alles konstruktiv und flauschig wie immer in dieser Community. Im Zuge dieser Kritik hab ich mir den Sym-Layer für alle Code-relevanten Symbole mal angeschaut. Im anfänglichen Layout war dieser rein nach Bauchgefühl belegt. Nun hab ich ein paar Nächte investiert und kann nun auch Statistik einfließen lassen. Herausgekommen ist KYB3R_KEYS V0.4 - Viel Spaß damit!</description>
+      <link>https://www.nerdbude.com/kyb3r_keys.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Thu, 16 Nov 2023 11:30:00 +0000</pubDate>
+      </item>   
+      <item>
+      <title>[KBD] KYB3R_KEYS - Ein Keyboardlayout für Netrunner, Hacker und Terminaljunkies</title>
+      <description>Ich habe mir mal mein tippverhalten angeschaut, viel Mate getrunken, zwischendurch mein geschmolzenes Gehirn vom Boden aufgewischt und rausgekommen ist ein Keyboardlayout für Netrunner, Hacker, Terminaljunkies, Nerds und Nerdettes. Naja fast zumindest. Das KYB3R_KEYS Layout deckt mein tägliches Verhalten am Hackbrett ab. Es ist ein Layout, das sich hauptsächlich auf die Benutzung von Terminalcommands und XMonad konzentriert und das in den Fokus rückt. Es ist mit Sicherheit noch nicht abgeschlossen aber es bietet mir eine solide Basis auf dem ich weiter Forschen und ausprobieren kann. Wenn ihr das auch wollt hab ich euch alle Files und Infos in den Post gepackt. Viel Spaß damit.e </description>
+      <link>https://www.nerdbude.com/kyb3r_keys.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Wed, 08 Nov 2023 22:50:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>[LOG] News aus den Backrooms der Nerdbude</title>
+      <description>Es gibt mal wieder ein paar Neuigkeiten aus den Tiefen der Nerdbude. Matrix-Server, $NB-Matrix-Room, Neue Kategorien, Infrastruktur usw. - quasi Metanews.</description>
+      <link>https://www.nerdbude.com/log_22082023.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Tue, 22 Aug 2023 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[HOW] HIY V - Matrix Synapse Homeserver</title>
+      <description>Als der allmächtige CORTEX IMPLANT Admin Ramses den Matrix Server "cyberwa.re" startete war ich sehr glücklich. Leider ist <b>CYBERWA.RE</b> schneller wieder verschwunden als mir lieb war. Nachdem Gedanken selber einen NixOS Matrix-Server aufzusetzen kann ich auch verstehen warum.</description>
+      <link>https://www.nerdbude.com/hiy_v.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Thu, 17 Aug 2023 00:30:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[PRO] TUT</title>
+      <description>Mastodon ist super und noch besser ist es, Mastodon im Terminal benutzen zu können. Ich habe lange das Tool toot benutzt. Jetzt sind die NixOS Packages für tut aktualisiert worden und ich bin begeistert. Es stehen euch alle Funktionen des Webinterfaces zur verfügung und darüber hinaus sogar noch mehr. Die Anleitung zu tut hab ich euch hier mal zusammen geschrieben. </description>
+      <link>https://www.nerdbude.com/tut.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Mon, 17 Jul 2023 13:00:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>[PRO] IAMB</title>
+      <description>Am Wochenende hat REVENGEDAY einen eigenen Matrixserver gestartet. So konnte ich endlich meinen Alten stilllegen und mich hier neu einrichten. Passend dazu hab ich IAMB gefunden. Einen Matrix Terminal Client mit Vim Controlling. Sehr schönes Tool.</description>
+      <link>https://www.nerdbude.com/iamb.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Mon, 03 Jul 2023 13:40:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[VIM] VIM STATUSLINE SELBER BAUEN</title>
+      <description>Die meisten Vim Plugins machen nichts anderes als Code, der in der .vimrc funktioniert, auszulagern. Um sich das zu sparen, kann das ein oder andere auch direkt in der Config erledigt werden. Bauen wir uns also selber eine Vim Statusline in der .vimrc. Dadurch haben wir das aussehen und den Inhalt deutlich einfacher im Griff.</description>
+      <link>https://www.nerdbude.com/vim_statusline.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Thu, 22 Jun 2023 13:40:00 +0000</pubDate>
+    </item>
+
+    <item>
+      <title>[LOG] 31052023</title>
+      <description>Es war etwas ruhiger hier die letzten Monate aber jetzt geht es weiter. Ich hab die NERDBUDE etwas umstrukturiert, den Server Umzug abgeschlossen, neue Projekte gestartet, alte Äste abgeschnitten und eine neue Font gibts auch (und sie ist es definitiv Wert erwähnt zu werden).</description>
+      <link>https://www.nerdbude.com/log_31052023.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Wed, 31 May 2023 11:30:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[HOW] HIY IV</title>
+      <description>Es hat etwas gedauert, aber jetzt funktioniert er. Der NixOS Mailserver für die NERDBUDE. Hier könnt ihr lesen wie das funktioniert.</description>
+      <link>https://www.nerdbude.com/hiy_iv.html</link>
+      <author>post@nerdbude.com (0x17)</author>
+      <pubDate>Fri, 26 May 2023 09:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[HOW] HIY III</title>
+      <description>Weiter gehts mit dem NixOS Webserver. Diesmal setzen wir NGINX auf und sagen ihm welchen Kram er ins internet schieben soll.</description>
+      <link>https://www.nerdbude.com/hiy_iii.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Fri, 24 Feb 2023 14:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[POD] CCH! LATE NIGHT</title>
+      <description>Der CCH! wird zwei Jahre alt und ihr bekommt ab jetzt regelmäßig (monatlich) die CCH! Late Night live um die Ohren gehauen.</description>
+      <link>https://www.nerdbude.com/cchlatenight.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Mon, 20 Feb 2023 14:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[MIS] Die Mechanicon in Bildern</title>
+      <description>Es war Mechanicon und die ersten Bilder der CCH! Ultras trudeln ein. Wenn ihr auch noch welche habt, meldet euch und ich kippe sie hier mit rein.</description>
+      <link>https://www.nerdbude.com/mechanicon2023.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Thu, 02 Feb 2023 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[COD] Der 3SB (simple static site builder)</title>
+      <description>Ein kleines CMS für die NERDBUDE</description>
+      <link>https://www.nerdbude.com/3sb.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Wed, 31 Jan 2023 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[HOW] Die Vorraussetzungen des Nerdbude Servers</title>
+      <description>Teil 2 des Umzugs. Welche Tools braucht der Server und wie bekommen wir NixOS auf den Server.</description>
+      <link>https://www.nerdbude.com/hiy_ii.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Tue, 29 Nov 2022 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[HOW] Die NERDBUDE zieht um!</title>
+      <description>... aber alles halb so wild. Wenn alles gut läuft merkt ihr davon nichts. Die Nerdbude zieht enlich vom 0-8-15 Hoster auf den eigene Server um und das inkl. neuer features.</description>
+      <link>https://www.nerdbude.com/hiy_i.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Thu, 24 Nov 2022 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[LOG] Twitter brennt - Zeit für neues</title>
+      <description>Ich mach es kurz. Twitter brennt und ich hau ab :) </description>
+      <link>https://www.nerdbude.com/twitter.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Tue, 15 Nov 2022 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[MIS] MagPi Magazine</title>
+      <description>Das Raspberry Pi eigene Magazin "The MagPi" hat über das NB100 Cyberdeck geschrieben.</description>
+      <link>https://www.nerdbude.com/magpi.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Thu, 27 Oct 2022 23:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[PRO] TLDR</title>
+      <description>Man pages sind meistens ewig lang und unübersichtlich. Zum Glück gibt es TLDR. Ein Tool das in aller Kürze die wichtigsten Parameter aufzeigt.</description>
+      <link>https://www.nerdbude.com/tldr.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Fri, 21 Oct 2022 10:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[POD] TELEPROST II</title>
+      <description>Ich durfte mal wieder im Teleprost Podcast mit Frank und Hannes aer auch mit Christian über den besten Film aller Zeiten sprechen - Hackers. Natürlich darf auch Keyboard Content nicht fehlen.</description>
+      <link>https://www.nerdbude.com/teleprost_ii.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Mon, 12 Aug 2022 15:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[LOG] LICENCE</title>
+      <description>Die NERDBUDE bekommt eine Lizenz.</description>
+      <link>https://www.nerdbude.com/log_15082022.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Mon, 15 Aug 2022 10:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[HDW] NB100 CYBERDECK</title>
+      <description>Das NB100 Cyberdeck ist fertig.</description>
+      <link>https://www.nerdbude.com/nb100.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Fri, 12 Aug 2022 10:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[COD] CYBER23</title>
+      <description>Neue Farbe für eure Terminals</description>
+      <link>https://www.nerdbude.com/cyber23.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Thu, 28 Jul 2022 17:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[POD] #1PPD</title>
+      <description>Die komplette #1podcastprotag Liste</description>
+      <link>https://www.nerdbude.com/onepodcastperday.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Fri, 15 Jul 2022 12:00:00 +0000</pubDate>
+    </item>
+    <item>
+      <title>[POD] DUUMVIRAT</title>
+      <description>Ich war mal wieder an fremden Mikrofonen</description>
+      <link>https://www.nerdbude.com/duumvirat.html</link>
+      <author>post@nerdbude.com (PH_0x17)</author>
+      <pubDate>Mon, 16 May 2022 11:00:00 +0000</pubDate>
+    </item>
     <item>
       <title>[PRO] TOOT</title>
       <description>Mastodon - aber im Terminal</description>

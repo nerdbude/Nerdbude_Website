@@ -1,0 +1,244 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[twitter] @PH_0x17
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+
+    <meta property="og:url" content="https://www.nerdbude.com/amstrad_nc100.html">
+    <meta property="og:title" content="NB100 - A Amstrad based Cyberdeck">
+    <meta property="og:description" content="Vielleicht kennt ihr das DevTerm. Ein wunderschönes Device. Leider recht teuer. Also bauen wir selber eins.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~ NB100 CYBERDECK ~~</h1></center>
+  <center><h2>** ICH HAB DA MAL WAS GEBAUT **</h2></center>
+  <center><st>[HDW] | [20220813] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Das <a href="https://www.clockworkpi.com/devterm">DevTerm</a> fällt mir in regelmäßigen Abständen immer wieder vor die Füße.
+Es ist wunderschön aber kostet auch seinen Preis - $339,- für Spielzeug ist dann doch etwas viel und hier nicht im Budget.
+Wenn das Budget nicht da ist, dann heißt es wohl selber bauen. Den Formfaktor hat Devterm nicht erfunden.
+Es gab diverse alte "Notebooks" die ebenfalls den Aufbau Display oben, Keyboard unten.
+So gab es auch den <b>EPSON HX-20</b>, <b>TANDY 102</b> oder eben den AMSTRAD NC100.
+Letzteren konnte ich auf EBay ergattern und das sogar noch bezahlbar.<br>
+Nun ist im <b>NC100</b> eher unbrauchbare Hardware verbaut. Da lag die Idee, das Device in ein Cyberdeck zu verwandeln, recht nahe.
+Ich muss dazu sagen ich bin kein großer Vintage-Computer-Collector, ich mag Hardware die ich auch benutzen kann und ich hoffe die Vintage-Nerds verzeihen
+mir das Zerlegen des <b>AMSTRAD NC100</b>.
+Was soll also alles passieren, damit der <b>AMSTRAD NC100</b> brauchbarer wird?<br>
+<br>
+<h3>PRE</h3>
+Der grobe Fahrplan was in das Cyberdeck alles rein soll und was es alles können soll:<br>
+<br>
+<span class="label">PRE</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">NixOS als Betriebssystem</span></ln>
+<ln><span class="unixshell">Raspberry Pi als Rechner</span></ln>
+<ln><span class="unixshell">Modernes Display</span></ln>
+<ln><span class="unixshell">Mechanische Tastatur (ortholinear, Lowprofile)</span></ln>
+<ln><span class="unixshell">Alle Ports nach außen führen</span></ln>
+</pre>
+</div>
+<br>
+Das sind mal die groben Eckpunkte.<br>
+Den größten Aufwand birgt wohl, das anpassen des Cases an die Anforderungen. Im Gegensatz zum OMNIBOOK 425, das hier auch noch rumliegt, ist das NC100 deutlich
+einfacher zu öffnen und vor allem ist das Display einfacher zu entfernen.<br>
+Bevor jetzt aber jede Menge Einzelteile geordert werden und wild drauf los gebastelt wird braucht es noch etwas mehr Planung. <br>
+Fangen wir an beim Display. Das Alte LCD Display ist zwar nostalgisch gesehen wundreschön, aber etwas mehr Farbe und
+Auflösung wäre super. Inspiriert vom DevTerm hab ich mich durch die diversen Shopping-Plattformen gesucht und bin auf ein Display gestoßen,
+dass wunderbar passt. Es ist ein 8.8" Display mit einer Auflösung von 1920px x 480px. Also mal ein etwas anderes Format.
+Das Display kommt mit einer eigenen Platine die per HDMI am Raspberry Pi angeschlossen wird und das Signal regelt.<br>
+Als Rechner kommt der Allrounder Raspberry Pi zum Einsatz. Darauf kommt das geliebte NixOS mit XMonad und Xmobar. Nun liegt der Raspberry Pi einigermaßen lose im
+Case des Amstrad. Also macht es Sinn die Ports nach außen zu legen. Der RJ54 Connector wird per Einbaubuchse an die linke Seite des Amstrad gelegt und
+drei USB Ports an die Oberseite.
+Das Keyboard ist eine CRKBD / CORNE. Allerdings nicht im eigentlichen Gebrauchssinn sondern als Unibody-Split.
+Ich spare mir das handwiring aus Faulheit und nehme stattdessen die CRKBD PCBs. Als Switches kommen Kailh Choc browns auf das Board und als erstes
+unbeschriftete kompatible Caps.<br>
+Soviel zu den Vorüberlegungen. Also haben wir ein Partliste die wie folgt aussieht:<br>
+<br>
+<span class="label">PARTLISTE</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">AMSTRAD NC100 Notepad</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">2x crkbd PCBs</span></ln>
+<ln><span class="unixshell">42x 1N4148 Dioden</span></ln>
+<ln><span class="unixshell">42x Kailh Choc Switches (brown)</span></ln>
+<ln><span class="unixshell">42x Kailh Choc Keycaps</span></ln>
+<ln><span class="unixshell">02x Pro-Micro Microcontroller</span></ln>
+<ln><span class="unixshell">3D printed Switchplate</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">8.8" Display</span></ln>
+<ln><span class="unixshell">02x USB Einbaubuchse</span></ln>
+<ln><span class="unixshell">01x RJ45 Einbaubuchse</span></ln>
+<ln><span class="unixshell">02x Micro USB Einbaubuchse</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">Raspberry Pi</span></ln>
+<ln><span class="unixshell">32GB MicroSD Card</span></ln>
+</pre>
+</div>
+<br>
+Damit ihr auch die richtigen Parts bestellen könnt, heißt es messen, messen, messen.
+Wenn ihr nicht messt, kann es sein, dass eure Parts nicht passen und das frustiert. Also geht es jetzt dem Amstrad an den Kragen und er wird zerlegt.<br>
+<h3>DISASSEMBLING</h3>
+Der Amstrad ist sehr leicht zu zerlegen.<br>
+Ihr müsst jediglich die 5 Schrauben am Boden des Devices lösen.
+Drei davon sind direkt am Gehäuseboden. Eine weitere ist für die Klappe unter der, der wunderschöne Amstrad Chip liegt und die letzte Schraube versteckt sich im Batteriefach.
+<br><br>
+<center><img src="https://www.nerdbude.com/images/nb100/disassembling.png" width=800px></center><br>
+<br>
+Wenn ihr alle Schrauben gelöst habt und den Amstrad öffnen könnt, liegt die wunderbare Welt der Vintage Computer Mainboards vor euch. Vorsicht ist trotzdem geboten. Am Mainboard des NC100 sind Display und Speaker per Stecker bzw. Flachbandkabel verbunden. Wenn ihr das nicht einfach abreißen wollt hebt den Deckel mit Vorsicht an, es ist zwar viel Spielraum vorhanden aber passt trotzdem auf. Die könnt ihr abstecken bzw. rausziehen und schon könnt ihr die beiden Hälften trennen. Das Keyboard könnt ihr nach dem Abstecken auch direkt rausnehmen.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/cable_01.png" width=800px></center><br>
+<h3>HACKEN</h3>
+Nun da der Amstrad zerlegt ist können alle Innereien raus und wir haben die Möglichkeit alles zu vermessen was ausschlaggebend ist für unsere weitere Planung. Beginnen wir bei dem womit ich mich auskenne. Dem Keyboard.
+Wie weiter oben schon erwähnt, kommt in den Amstrad eine CRKBD/CORNE. Eine meiner liebsten Split-Keyboards. Ein kurzer Test durch auflegen der PCBs zeigt, dass die CORNE in das Case passen könnte. Aber es wäre zu einfach wenn alles ohne Komplikationen abläuft. Die beiden Hälften der CORNE werden normalerweise per TRRS Kabel verbunden. Nun liegen die beiden PCBs aber realtiv nah bei einander, so fällt die Möglichkeit ein TRRS Kabel zu nutzen leider weg. Halb so schlimm - wird eben direkt verkabelt. Nun sollen die PCBs aber nicht nur lose im Amstrad liegen sondern es soll noch gut aussehen. Deswegen gibt es eine schicke 3D gedruckte Switchplate. Dafür braucht es aber wieder die Maße:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/keyboard_cutout.png" width=600px></center>
+<br><br>
+Die Plate kann leicht unter dem Rahmen platziert werden. Oben und unten sind es 1.5mm und rechts bzw. links 2mm. Das Keyboard hat auf der Oberfläche einen Platz von 285mm x 96mm. Die Plate selber hat die Maße von 288mm x 100mm.
+Da ich eine 00 bin im Design von Plates, PCBs oder 3D-Druck-fähigen Modellen. Habe ich mich ein wenig umgehört. Eine Plate die die PCBs waagerecht anordnet gibt es leider nicht per default. So musste ich mich dann doch einarbeiten in das Thema Design von Plates. Ein paar Discord User haben mir dann weiterhelfen können.
+Danke hier an <b>mini-e industry plant</b> und <b>M4NU</b> für Tipps und Hilfestellung.
+Aber auch der <a href="https://www.twitter.com/VonMumpitz">Frank</a> hat mir Hilfe angeboten. So hab ich das Tool <b>QCAD</b> entdeckt und damit ist es sehr leicht eine Plate auf den Millimeter genau zu entwerfen. Nun hab ich alle Maße übernommen und habe einen fast fertigen Entwurf für die Plate. Fast. Was noch fehlt ist die Höhe der Plate.
+Dazu wird erst das Original-Keyboard des Amstrad gemessen. Das liegt bei 7mm Höhe. Das ist nicht viel. Als Vergleich hab ich hier zum Glück die ein oder andere CORNE an der ich messen kann, ob alles passt.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/concept.png"></center>
+<br>
+<br>
+Normalerweise werden die Microcontroller oben auf der PCB der CORNE platziert. Da ich aber beim NB100 Cyberdeck eine geschlossene Plate haben will,
+wird das leider nichts, weil die Microcontroller höher sitzen, als die Plate.
+Die erste Idee war die Microcontroller unter die PCBs zu packen. Wie ihr an den Bildern oben seht,
+ist der Aufbau (ohne Plate) bereits 10mm hoch. Passt also nicht in das Case. Wie gesagt - Komplikationen.
+Macht aber nichts. Also schauen wir uns den restlichen Aufbau an. Bei einer Standard-Plate von 2mm Höhe ist der Aufbau inkl. Switches und Dioden 6mm hoch.
+Das passt dann schon eher in die 7mm Platz die zur Verfügung stehen. Also wird die Plate 2mm hoch sein.
+Da ich selber keinen 3D Drucker habe - wird der gute <a href="https://www.twitter.com/fleaz_">FLEAZ</a> beauftragt.<br>
+Was passiert nun aber mit den Microcontrollern? Die werden ganz einfach ausgelagert, d.h. die Microcontroller werden per Kabel an die PCBs gelötet und werden,
+gut abgeschirmt unter dem Display verstaut.<br>
+<br>
+Weiter gehts beim Display. Die Außenmaße des Displays sind 231mm x 65mm. Also etwas größer als das Original-LCD Display.
+Das heißt der Deckel des Amstrad muss  modifiziert werden. Es empfiehlt sich die Blende die der Amstrad auf dem Deckel hat, zu entfernen. Das geht super mit einem Fön.
+Wenn die Blende entfernt ist, lässt es sich wieder wunderbar vermessen. Das Display passt auf den Kleinen Versatz, aufdem die Blende sitzt.<br>
+<br>
+Wenn alles vermessen ist, damit wir die 3D Parts bestellen können, geht es ans eingemachte. Den Anfang macht das Case. Im Case des <b>NB100</b> ist der Platz sehr begrenzt.
+Deswegen müssen das Batteriefach und der Zugang zum Amstrad-Chip innen entfernt werden. Hier werden die ersten Vintag-Computer-Enthusiast:innen laut schreien,
+denn hier wird Plastik abgetragen und das unwiederbringbar. Wenn alles unnötige Plastik entfernt ist, wird die Klappe für den Amstrad Chip verklebt und der
+Deckel für das Batteriefach einfach aufgesteckt. So ist die Unterseite des <b>NB100</b> schick und Innen darf es ruhig etwas wild ausehen.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/nb100_ports.png"></center>
+<br>
+Als nächstes kommt die Oberseite des Cases dran. Hier wird (nach einiger Prüfung ob die Einbauhöhe stimmt) die Keyboard Switchplate eingeklebt.
+Die passt perfekt an die Stelle wo vorher das Keyboard saß. Die Plate ist aber nicht das einzige.
+Das <b>NB100</b> hat an der rechten Seite ein Rädchen, dass zur Helligkeitsregelung diente.
+Hier platzieren wir unsere RJ45 Buchse. Dazu muss allerdings ein Stück vom Case entfernt werden. Das machen wir am besten mit der Oldschool Bügelsäge.
+Hier haben wir den ersten Milestone erreicht. Das Case ist soweit fertig und einsatzbereit. Das alte Anthrazit soll allerdings einem schönen Schwarz weichen.
+Also geht's ans Lackieren. Also ein Plätzchen suchen, mit viel Platz und die Farbdosen auspacken.
+Beim Schwarz ist das noch relativ schnell erledigt. Trocknen lassen. Nun sollen noch zwei hübsche lila Streifen drauf, d.h. alles gut abkleben,
+damit nur die Streifen Lila werden und mit Lila drüber lackieren.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/nb100_paint.png" width="600"></center>
+<br>
+<br>
+Wenn alles gut durchgetrocknet ist, ist das Case entgültig fertig. Nun kommen die Innereien und das Keyboard.<br>
+<br>
+<h3>KEYBOARD</h3>
+Beim Keyboard geht es etwas anders zu, als wenn die CORNE als separates stand-alone Board gebaut werden würde.
+Als erstes werden die Dioden auf die PCBs gelötet.
+In dem Fall SOD-123FL SMD Dioden. Die kommen allerdings auf die Unterseite der PCBs. Nachdem die Dioden verlötet sind, werden die Microcontroller verlötet.
+Der Microcontroller kommt allerdings nicht direkt auf die PCBs, da sonst die Einbauhöhe nicht mehr passt und das Keyboard nicht mehr ins Case passt.
+Also kommen Kabel an die PCBs und dann zu den passenden Pins am Microcontroller. Eine etwas ungewöhnliche Art aber was tun wir nicht alles um ein paar Millimeter einzusparen.
+Das wichtige daran ist, dass die Microcontroller isoliert werden müssen, damit nicht ungewollte Kurzschlüsse entstehen.
+Ist etwas umständlicher aber ist notwendig. Wenn das erledigt ist, werden die beiden Hälften miteinander verbunden. Der Platz für TRRS Buchsen fehlt natürlich auch,
+also direkt verkabeln. Als vorletzten Schritt wird das Board getestet bevor es eingebaut wird.
+Nichts ist nerviger als ein Keyboard fertig zu bauen ohne es vorher getsetet zu haben. Also Keyboard flashen mit der wunderbaren QMK:<br>
+Getestet wird das Keyboard mit einer Pinzette und einem Tool das mir alle Tastenanschläge anzeigt.
+Wenn beim Keyboard alles funktioniert, kann es ins Case und die Switches werden verlötet. Damit wäre Das Keyboard fertig verbaut und einsatzbereit.<br>
+<br>
+<h3>DISPLAY</h3>
+Das Display kommt direkt auf den Rahmen der die Blende gehalten hat. Mit ein paar kleinen Klebepunkten wird das Ganze auf dem Deckel fixiert.
+Da as Display aber nicht die ganze Breite der Aussparung ausfüllt, schneiden wir uns einen Kleinen Ausschnitt daraus zurecht, lakieren das ganze lila und kleben die
+Abdeckung dann wieder an Ort und Stelle. Auch wenn es offensichtlich ist, am besten montiert sich das Display ohne das es an der PCB hängt.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/nb100_display.png"></center>
+<br><br>
+<h3>PORTS</h3>
+Im nächsten Schritt verbauen wir die Ports. Das sind zum einen die zwei Powerports an der Oberseite des Cases, die RJ45 auf der rechten Seite und die
+zwei USB Ports links. Hier kommt wieder unser Dealer zum Einsatz und druckt uns ein Paar Blenden damit das ganze auch hübsch aussieht. Das <b>NB100</b>
+hat noch einen Slot der keinerlei Verwendung hat deswegen wird der einfach verschlossen.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/nb100/nb100_ports2.png"></center>
+<br><br>
+Die Blenden werden mit der Unterseite des Cases verklebt, mit der Oberseite allerdings nicht. So können wir das Case auch später noch öffnen ohne alles
+auseinanderreißen zu müssen.<br>
+<br>
+<h3>CONNECT IT!</h3>
+Da nun alle äußeren Komponenten verbaut sind, kann es an die Verkabelung gehen. Im ersten Schritt der Verkabelung werden USB und microUSB Buchsen an die Blenden
+geschraubt. Die Kabel im Gehäuse zu verstauen ist gar nicht so einfach. Ins Case kommen die Kabel und der Raspberry Pi. An den Raspberry Pi kommen das Micro-USB Kabel für das Keyboard, das
+Netzwerkkabel und die Platine für's Display wird mit dem Powerport verbunden. Nun kann das Top des Cases draufgepackt werden. Dabei müssen die beiden
+Microcontroller irgendwie zwischen die anderen Kabel geschoben zu werden. Wenn euch das geglückt ist kann das Keyboard an den Raspberry Pi angeschlossen werden.
+Nun da der Großteil verkabelt ist, kommen die 4 Schrauben wieder ins Gehäuse und fixieren das ganze wieder. Wenn alles soweit sitzt - kommt das Display.
+Das Display wird in die Aussparung des Tops geklebt ABER! vorher natürlich mit dem Flachbandkabel an der Platine connected.<br>
+<br>
+Fertig - das <b>NB100</b> Cyberdeck!
+<br><br>
+<center><img src="https://www.nerdbude.com/images/nb100/nb100_final.png"></center>
+<br><br>
+Das <b>NB100</b> in den weiten des Netzes:<br>
+[-] <a href="https://kbd.news/NB100-cyberdeck-1594.html">Post im Keyboard Builders Digest</a><br>
+[-] <a href="https://hackaday.com/2022/08/13/an-amstrad-nc100-has-a-new-purpose-in-life/">Artikel auf Hackaday.com</a><br>
+[-] <a href="https://hackaday.io/project/186792-nb100-cyberdeck">Hackaday.io</a><br>
+[-] <a href="https://www.hackster.io/news/vintage-amstrad-nc100-becomes-modern-cyberdeck-7980bb1e3b26">Hackster.io</a><br>
+[-] <a href="https://magpi.raspberrypi.com/articles/nb100-cyberdeck">MagPi Magazine</a><br>
+<br><br>
+Dank und Credits:<br>
+[-] <a href="https://www.twitter.com/fleaz_">Fleaz</a> - 3D Print Parts<br>
+[-] <a href="https://twitter.com/inkOne">Ink_0ne</a> - SMD Dioden<br>
+[-] <a href="https://revengeday.de/">Revenge Day</a> - Musik<br>
+[-] <a href="https://twitter.com/VonMumpitz">Frank</a> - Tips und Connections<br>
+[-] <a href="https://kbd.news">KBD.NEWS</a> - Mention in Keyboard Builders Digest<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

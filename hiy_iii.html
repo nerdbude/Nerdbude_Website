@@ -1,0 +1,338 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[twitter] @PH_0x17
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+
+    <meta property="og:url" content="https://www.nerdbude.com/hiy_i.html">
+    <meta property="og:title" content="Host it yourself (3)">
+    <meta property="og:description" content="Jetzt gehts ans eingemachte. Der Webserver wird aufgesetzt.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~ HIY (III) ~~</h1></center>
+  <center><h2>** WEBSERVER **</h2></center>
+  <center><st>[HOW] | [20230227] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Nachdem die Struktur und die Vorraussetzungen geklärt sind, geht es jetzt ans Terminal. NixOS läuft auf der Hetzner Kiste und wartet quasi darauf was tun zu können. Geben wir ihr also was sie will und bauen den NGINX Server für die Domains inkl. TLS/SSL.
+Prinzipiell sollen auf dem Server drei Domains laufen. Natürlich die <b>NERDBUDE</b>, der <b>Click! Clack! Hack!</b> und natürlich auch das <a>Damn Fine Keyboards</a>. Vor dem Umzug waren diese Websites im Filetree der <b>NERDBUDE</b> verankert.
+Das soll nun natürlich nicht mehr der Fall sein, sondern die Websites sollen völlig unabhängig von einander gehostet werden. Dazu müssen im Vorfeld natürlich der <b>CCH!</b> und das <b>DFK</b> aus der <b>NERDBUDE</b> rausgekratzt werden.
+Hab ich getan - also hab ich jetzt drei selbstständige Websitestrukturen und es kann los gehen.<br>
+<br>
+<h2>WEBSITESTRUKTUR</h2>
+<br>
+Als erstes müssen die ganzen HTML Files auf den Server. Ich denke das Default-Directory dafür ist <b>/var/www/$websitename/</b>. Also werden die einzelnen Strukturen per scp auf den Server geschoben. Natürlich wird hier <b>$websitename</b> mit dem eigentlichen Domainname ersetzt - also <b>/var/www/clickclackhack/</b>. Yeah - der Content ist schon mal da. Jetzt müssen wir NGINX nur noch sagen, dass der Content auch da ist.
+<h2>CONFIGURATION.NIX</h2>
+Die Konfiguration ist normalerweise recht simple und schnell erledigt. Ich hab allerdings einen Fehler gemacht. Mein Gehirn ist immernoch drauf getrimmt, Tools in einzelnen Configfiles zu konfigurieren. Unter NixOS machen wir das aber nicht und praktischerweise gibt es auch Fehlermeldungen dazu die einer/einem sagen, dass alles "Read-Only" ist. Irgendwann merkt sich das mein Hirn auch, dass wir doch alles in der <b>configuration.nix</b> definieren wollen.
+Also rein in die <b>configuratio.nix</b>.
+Grundlegend sieht die funktionierende <b>configuration.nix</b> wie folgt aus. Keine Sorge ich geh es gleich noch Schritt für Schritt durch.<br>
+<br><br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">{ config, pkgs, ... }:</span></ln>
+    <ln><span class="unixshell">let release = "nixos-21.11";</span></ln>
+    <ln><span class="unixshell">in  {</span></ln>
+    <ln><span class="unixshell">  imports = [</span></ln>
+    <ln><span class="unixshell">    ./hardware-configuration.nix</span></ln>
+    <ln><span class="unixshell">		})</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">    ];</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">### WEB SERVER</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell"> services.nginx = {</span></ln>
+    <ln><span class="unixshell">	enable = true;</span></ln>
+    <ln><span class="unixshell">	virtualHosts."damnfinekeyboards.com" = {</span></ln>
+    <ln><span class="unixshell">		enableACME = true;</span></ln>
+    <ln><span class="unixshell">		forceSSL = true;</span></ln>
+    <ln><span class="unixshell">		root = "/var/www/damnfinekeyboards/";</span></ln>
+    <ln><span class="unixshell">		};</span></ln>
+    <ln><span class="unixshell">	virtualHosts."nerdbude.com" = {</span></ln>
+    <ln><span class="unixshell">		enableACME = true;</span></ln>
+    <ln><span class="unixshell">		forceSSL = true;</span></ln>
+    <ln><span class="unixshell">		root = "/var/www/nerdbude/";</span></ln>
+    <ln><span class="unixshell">		};</span></ln>
+    <ln><span class="unixshell">	virtualHosts."clickclackhack.de" = {</span></ln>
+    <ln><span class="unixshell">		enableACME = true;</span></ln>
+    <ln><span class="unixshell">		forceSSL = true;</span></ln>
+    <ln><span class="unixshell">		root = "/var/www/clickclackhack/";</span></ln>
+    <ln><span class="unixshell">		};</span></ln>
+    <ln><span class="unixshell">	};</span></ln>
+    <ln><span class="unixshell">	};</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  security.acme.acceptTerms = true;</span></ln>
+    <ln><span class="unixshell">  security.acme.certs = {</span></ln>
+    <ln><span class="unixshell">	"testbude.space".email = "post@testbude.space";</span></ln>
+    <ln><span class="unixshell">	"damnfinekeyboards.com".email = "info@damnfinekeyboards.com";</span></ln>
+    <ln><span class="unixshell">	"www.damnfinekeyboards.com".email = "info@damnfinekeyboards.com";</span></ln>
+    <ln><span class="unixshell">	"nerdbude.com".email = "post@nerdbude.com";</span></ln>
+    <ln><span class="unixshell">	"www.nerdbude.com".email = "post@nerdbude.com";</span></ln>
+    <ln><span class="unixshell">	"clickclackhack.de".email = "info@clickclackhack.de";</span></ln>
+    <ln><span class="unixshell">	"www.clickclackhack.de".email = "info@clickclackhack.de";</span></ln>
+    <ln><span class="unixshell">	};</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  boot.cleanTmpDir = true;</span></ln>
+    <ln><span class="unixshell">  zramSwap.enable = true;</span></ln>
+    <ln><span class="unixshell">  networking.hostName = "nb-main";</span></ln>
+    <ln><span class="unixshell">  networking.domain = "";</span></ln>
+    <ln><span class="unixshell">  services.openssh.enable = true;</span></ln>
+    <ln><span class="unixshell">  networking.firewall = {</span></ln>
+    <ln><span class="unixshell">	enable = true;</span></ln>
+    <ln><span class="unixshell">	allowedTCPPorts = [ 22 25 80 443 ];</span></ln>
+    <ln><span class="unixshell">	allowedUDPPortRanges = [</span></ln>
+    <ln><span class="unixshell">	  { from = 4000; to = 4007; }</span></ln>
+    <ln><span class="unixshell">	  { from = 8000; to = 8010; }</span></ln>
+    <ln><span class="unixshell">        ];</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">### SSH CERT FOR REMOTE ACCESS</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  users.users.root.openssh.authorizedKeys.keys = [</span></ln>
+    <ln><span class="unixshell">    "ssh-rsa XXX"</span></ln>
+    <ln><span class="unixshell">  ];</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">### TOOLCHAIN</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  environment.systemPackages = with pkgs; [</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">	vim</span></ln>
+    <ln><span class="unixshell">	git</span></ln>
+    <ln><span class="unixshell">	unzip</span></ln>
+    <ln><span class="unixshell">	openssl</span></ln>
+    <ln><span class="unixshell">	goaccess</span></ln>
+    <ln><span class="unixshell">	chkrootkit</span></ln>
+    <ln><span class="unixshell">	service-wrapper</span></ln>
+    <ln><span class="unixshell">  ];</span></ln>
+    <ln><span class="unixshell">}</span></ln>
+  </pre>
+</div>
+<br>
+<br>
+That's it. Die komplette Config. Ok gehen wir den Kram mal durch.<br>
+Ganz am Anfang steht die übliche NixOS Config und die verlinkte externe hardware-configuration.nix - den Teil überspringe ich und fange ganz unten an.
+Im unteren Teil der <b>configuration.nix</b> finden sich die Tools die wir auf dem Server installieren wollen bzw. sollten damit das auch alles funktioniert.
+Ich hab mich dafür entschieden das ganze übersichtlich und minimalistisch zu halten. Je weniger Tools auf dem Server laufen, desto weniger Angriffsfläche bieten selbige auch.
+Die Tools die auf dem Server laufen sind folgende:<br>
+<br><br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">### TOOLCHAIN</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  environment.systemPackages = with pkgs; [</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">	vim</span></ln>
+    <ln><span class="unixshell">	git</span></ln>
+    <ln><span class="unixshell">	unzip</span></ln>
+    <ln><span class="unixshell">	openssl</span></ln>
+    <ln><span class="unixshell">	goaccess</span></ln>
+    <ln><span class="unixshell">	chkrootkit</span></ln>
+    <ln><span class="unixshell">	service-wrapper</span></ln>
+    <ln><span class="unixshell">  ];</span></ln>
+  </pre>
+</div>
+<br>
+<br>
+Ich denke die Liste ist selbsterklärend. <b>Vim</b> als Texteditor, <b>git</b> als Versionsverwaltungstool, <b>unzip</b> falls mal was entpackt werden muss, <b>openssl</b> für die SSL Zertifikatsgeschichten, <b>goaccess</b> ist ein ziemlich geiles Tool zur live Log Auswertung, <b>chkrootkit</b> als Tool zur Prüfung ob sich Rootkits auf dem Server befinden. Das hat folgenden Grund. Sobald irgendwo ein Server ans Netz geht, gibt es ein paar finstere Typen die sich daran zu schaffen machen. So gab es auch auf dem <b>$NB_MAIN</b> (so heißt die Hetzner Kiste übrigens) seltsame Aktivitäten direkt dach der Einrichtung. <b>service-wrapper</b> ist der Schnittstellen-Adapter für systemctl commands. <b>[EDIT]</b> <a href="https://chaos.social/@fleaz">fleaz</a> hat mir den Tip gegeben, dass "nginx" gar nicht zusätzlich über die "systemPackages" installieren muss, da sich die configuration.nix zusammen mit der NGINX-Konfiguration darum kümmert, NGINX zu installieren. Es ist an dem Punkt also völlig überflüssig.
+<br>
+Die Tools sind installiert. Also gehts weiter mit der <b>NGINX</b> Konfiguration.
+<h2>NGINX</h2>
+<br>
+NGINX ist unser Webserver. Der kümmert sich zum einen darum den Content, also die .html Files der Website, mit den Domains zu verknüpfen und zusätzlich noch SSL Zertifikate dafür zu generieren.
+Die Verknüpfung zu den Domains passiert in diesem Abschnitt:<br>
+<br>
+<br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell"> services.nginx = {</span></ln>
+    <ln><span class="unixshell">	enable = true;</span></ln>
+    <ln><span class="unixshell">	virtualHosts."nerdbude.com" = {</span></ln>
+    <ln><span class="unixshell">    enableACME = true;</span></ln>
+    <ln><span class="unixshell">		forceSSL = true;</span></ln>
+    <ln><span class="unixshell">		root = "/var/www/nerdbude/";</span></ln>
+    <ln><span class="unixshell">		};</span></ln>
+  </pre>
+</div>
+<br><br>
+Die ersten zwei Zeilen starten NGINX als Webserver.<br>
+Mit "virtualHosts." wird die Website initialisiert und hier werden auch grundlegende Parameter mitgegeben. Damit NGINX auch merkt welche Domain auf welchen Content zeigen soll geben wir noch die Website als Parameter mit, also <b>virtualHosts."nerbude.com"</b>.
+Unter diesem Virtual Host geben wir auch noch die Anweisung zur Generierung der SSL Zertifikate mit. Das regelt <b>enableACME = true;</b> und damit ausschließlich SSL verwendet wird packen wir noch <b>forceSSL = true;</b> dazu.
+Zu guter Letzt definieren wir mit <b>root = "/var/www/nerdbude/";</b> den Pfad zu den .html Files.
+Das reicht im Grunde aus, damit NGINX die Website ausliefert. Die Redundanz der Websites für die Versionen mit und ohne "www" braucht es nicht als "virtualHosts"-Eintrag. Hier reicht ein Redirect von der einen zur anderen Version. [Danke fleaz!]
+Da SSL immer noch eine Kontaktmail braucht geben wir die im folgenden Abschnitt noch mit:<br>
+<br><br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">  security.acme.acceptTerms = true;</span></ln>
+    <ln><span class="unixshell">  security.acme.certs = {</span></ln>
+    <ln><span class="unixshell">	"nerdbude.com".email = "post@nerdbude.com";</span></ln>
+    <ln><span class="unixshell">	"www.nerdbude.com".email = "post@nerdbude.com";</span></ln>
+    <ln><span class="unixshell">	};</span></ln>
+  </pre>
+</div>
+<br><br>
+Das sind die grundlegenden Configs für die Domains inkl. SSL Zertifikate. NixOS generiert die SSL Zertifikate völlig automagisch. Es kann kurz dauern bis diese erkannt werden, das hat bei mir zwischen 10 und 15 Minuten gedauert. Also total aushaltbar.
+Nun sollten wir NGINX noch ein paar allgemeine Parameter mitgeben.
+<br><br><br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">  boot.cleanTmpDir = true;</span></ln>
+    <ln><span class="unixshell">  zramSwap.enable = true;</span></ln>
+    <ln><span class="unixshell">  networking.hostName = "nb-main";</span></ln>
+    <ln><span class="unixshell">  networking.domain = "";</span></ln>
+    <ln><span class="unixshell">  services.openssh.enable = true;</span></ln>
+    <ln><span class="unixshell">  networking.firewall = {</span></ln>
+    <ln><span class="unixshell">	enable = true;</span></ln>
+    <ln><span class="unixshell">	allowedTCPPorts = [ 22 25 80 443 ];</span></ln>
+    <ln><span class="unixshell">	allowedUDPPortRanges = [</span></ln>
+    <ln><span class="unixshell">	  { from = 4000; to = 4007; }</span></ln>
+    <ln><span class="unixshell">	  { from = 8000; to = 8010; }</span></ln>
+    <ln><span class="unixshell">        ];</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">### SSH CERT FOR REMOTE ACCESS</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">  users.users.root.openssh.authorizedKeys.keys = [</span></ln>
+    <ln><span class="unixshell">    "ssh-rsa XXX"</span></ln>
+    <ln><span class="unixshell">  ];</span></ln>
+  </pre>
+</div>
+<br><br>
+Zum einen aktivieren wir hier den SSH Zugang mit <b>services.openssh.enable = true;</b> und aktivieren die Firewall und machen ein paar Ports auf. Das passiert hier und ist relativ selbsterklärend:<br>
+<br>
+<br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">  networking.firewall = {</span></ln>
+    <ln><span class="unixshell">	enable = true;</span></ln>
+    <ln><span class="unixshell">	allowedTCPPorts = [ 22 25 80 443 ];</span></ln>
+    <ln><span class="unixshell">	allowedUDPPortRanges = [</span></ln>
+    <ln><span class="unixshell">	  { from = 4000; to = 4007; }</span></ln>
+    <ln><span class="unixshell">	  { from = 8000; to = 8010; }</span></ln>
+    <ln><span class="unixshell">        ];</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+  </pre>
+</div>
+<br>
+<br>
+Aktiviert wird die Firewall mit <b>enable = true;</b> und unter <b>allowedTCPPorts = [ 22 25 80 443 ];</b> geben wir der Firewall die Ports mit die sie durchlassen soll.
+Als Abschluss lassen wir noch unseren SSH Key noch in der <b>configuration.nix</b> umd auch per SSH auf den Server zukommen.<br>
+<br><br>
+<span class="label">configuration.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">  users.users.root.openssh.authorizedKeys.keys = [</span></ln>
+    <ln><span class="unixshell">    "ssh-rsa XXX"</span></ln>
+    <ln><span class="unixshell">  ];</span></ln>
+  </pre>
+</div>
+<br><br>
+Der SSH Key stammt noch aus der Installation von NixOS die ich <a href="https://www.nerdbude.com/hiy_ii.html">HIER</a> beschrieben hatte. Hier könnt ihr natürlich noch andere Keys hinterlegen.
+Natürlich müsst ihr XXX mit eurem Key ersetzen. Nachdem ihr den obligatorischen <b>nixos-rebuild switch</b> durchgeführt habt sollte euer Webserver laufen.
+Um die Domains selber geht es im nächsten Teil. Die brauchen nämlich noch die Weiterleitung auf euren Server.<br>
+<br>
+<h2>BONUS: 301 REDIRECT</h2>
+<br>
+Aktuell laufen <b>clickclackhack.de</b> und <b>damnfinekeyboards.com</b> schon auf dem NixOS Server. Die <b>NERDBUDE</b> allerdings noch nicht. Das hat den einfachen Grund, dass der Podcast-Feed in der <b>NERDBUDE</b> Struktur liegt.
+Würde ich jetzt einfach umziehen, würden eure Podcatcher keine neuen Episoden mehr bekommen. Deswegen bekommt der Feed einen 301-Redirect der allen Clients sagt, dass der Feed permanent auf eine neue Adresse umgezogen ist.
+Das ganze regelt die <b>.htaccess</b> Datei, die beim alten Anbieter in der Struktur abgelegt wird. Die <b>.htaccess</b> sieht wie folgt aus:<br>
+<br>
+<br>
+<span class="label">.htaccess</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">&lt;IfModule mod_rewrite.c&gt;</span></ln>
+    <ln><span class="unixshell">RewriteEngine On</span></ln>
+    <ln><span class="unixshell">RewriteBase /</span></ln>
+    <ln><span class="unixshell">RewriteRule ^podcast/feed/feed.xml https://www.clickclackhack.de/feed/feed.xml [L,R=301]</span></ln>
+    <ln><span class="unixshell">&lt;/IfModule&gt;</span></ln>
+  </pre>
+</div>
+<br><br>
+Sobald nun ein Client (Browser, Feedreader, Podcatcher) den Feed aufrufen will, bekommt er gesagt, dass er doch bitte den neuen nehmen soll.
+Den lasse ich jetzt noch etwas laufen, damit auch jede*r den neuen Feed bekommt und wenn das abgeschlossen ist, wandert die <b>NERDBUDE</b> auch endlich auf den NixOS Server.
+<br>
+<br>
+Auf dem NixOS Server bauen wir das für die "www"-Weiterleitung ähnlich auf (wenn jemand von euch weiß wie ich das in die configuration.nix einbaue, schreibt mir und ich bau das hier mit rein):
+<br><br>
+<span class="label">.htaccess</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">&lt;IfModule mod_rewrite.c&gt;</span></ln>
+    <ln><span class="unixshell">RewriteEngine On</span></ln>
+    <ln><span class="unixshell">RewriteBase /</span></ln>
+    <ln><span class="unixshell">RewriteRule ^https://www.clickclackhack.de https://clickclackhack.de [L,R=301]</span></ln>
+    <ln><span class="unixshell">&lt;/IfModule&gt;</span></ln>
+  </pre>
+</div>
+<br><br>
+PARTS:<br>
+<a href="https://www.nerdbude.com/hiy_i.html">[01] - Intro</a><br>
+<a href="https://www.nerdbude.com/hiy_ii.html">[02] - Vorraussetzungen</a><br>
+<a href="https://www.nerdbude.com/hiy_iii.html">[03] - Webserver</a><br>
+<a href="https://www.nerdbude.com/hiy_iv.html">[04] - Mailserver</a><br>
+<br><br>
+<br>
+EDIT:<br>
+<edit>[2023-02-27]</edit> - remove nginx from systempackages / redirect websites [<a href="https://chaos.social/@fleaz">fleaz</a>]
+
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

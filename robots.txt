@@ -1,6 +1,4 @@
 User-agent: *
-Disallow: /links_cch.html
 Disallow: /impressum.html
-Disallow: /about.html
 Disallow: /datenschutz.html
-Disallow: /ph0x17.html 
+Disallow: /files/

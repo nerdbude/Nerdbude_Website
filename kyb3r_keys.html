@@ -1,0 +1,390 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[mastodon] @0x17@corteximplant.com
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+
+    <meta property="og:url" content="https://www.nerdbude.com/kyb3r_keys.html">
+    <meta property="og:title" content="KYB3R KEYS">
+    <meta property="og:description" content="Ich probiere mal ein Keyboardlayout zu bauen, das auf meine Ansprüche zugeschnitten ist.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~  KYB3R_KEYS  ~~</h1></center>
+  <center><h2>** EIN DIY KEYBOARD LAYOUT **</h2></center>
+  <center><st>[HOW] | [20231107] | [20231120] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+<!--! XXXXXX INTRO TEXT XXXXXXX -->
+<center><img src="https://www.nerdbude.com/images/kyb3r/logo.png" width=400px></center><br>
+<br>
+<br>
+<span class="label">VERSION: 0.4 | 2023-11-16</span> [<a href="#changelog">CHANGELOG</a>]
+<br>
+<br>
+Vor ein paar Jahren war ich auf der Suche nach einer neuen Tastatur und bin dann in ein Loch gefallen, dass mich bis heute nicht mehr losgelassen hat und immernoch fasziniert mit
+seinen immer wieder neu aufkommenden Themen und der Vielfältigkeit die sich auftut. Ich hab ein paar Keyboards gebaut und ausprobiert und kann für mich sagen, dass mir die
+CRKBD (Corne) am besten gefällt bis jetzt. Wenn man sich in diesem Hobby bewegt kommt man irgendwann an den Punkt, wo einem das default QWERTY Layout nicht mehr wirklich taugt und
+an genau dem Punkt bin ich jetzt. Also versuche ich mich mal an meinem custom Layout, das komplett auf meinen Usecase angepasst ist. So hab ich ein (hoffentlich) perfektes Layout und vielleicht hat ja jemand von euch einen ähnlichen workflow oder es hilft euch auch beim designen eures Layouts.<br>
+Wenn ihr das Layout auf eurem Keyboard habt, reicht ein Default US-Keyboardlayout am Rechner, damit alle Keys das tun was sie sollen. Wenn ihr die deutschen Umlaute Ä, Ö, Ü und ß haben wollt empfehle ich euch das <a href="https://eurkey.steffen.bruentjen.eu">EurKey Layout</a>. Hier bleibt die Keymap die gleiche, aber ihr habt zusätzlich die Möglichkeit Umlaute per <b>ALT-GR</b> zu generieren.
+<br>
+<br>
+<h2>0x01 - VORAUSSETZUNGEN</h2>
+<br>
+Bevor es aber ans eingemachte geht, müssen die Parameter nach denen das Layout gebaut ewrden soll, definiert werden. Fangen wir beim einfachsten an -
+welches Keyboard soll benutzt werden.
+Ich benutze die oben schon erwähnte <a href="https://www.github.com/foostan/crkbd">CRKBD / CORNE</a> mit 3x6 +3 Keys als daily driver.
+Die CRKBD hat als Main-Cluster (also der Block auf dem die Alpha Keys liegen) 3x5 Keys, d.h. drei Reihen und fünf Spalten. Jeweils an den Außenseiten befindet sich noch eine Spalte für Modifierkeys wie ESC, CTRL, ALT usw. Für die Daumen gibt es ebenfalls jeweils drei Keys die aber nur sekundär was mit den <b>KYB3R KEYS</b> zu tun haben, aber dazu später mehr. Das ganze sieht in der Hardwarevariante dann so aus:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/crkbd.png"></center><br>
+<br>
+Die nächste Überlegung sollte der Usecase des Keyboards bzw. des Layouts sein. Hier hab ich mir die letzte Zeit mal angeschaut was ich so auf meinem Keyboard tippe.
+Grundsätzlich kann ich sagen, dass es hauptsächlich um Code und Fließtext geht. Jetzt propagiere ich hier auf der <b>$NB</b> des öfteren, dass ich lieber Terminaltools
+als GUI-tools benutze. Da ich für die meisten Tools mittlerweile Aliase benutze würde ich die Terminal-Commands mit zum Fließtext zählen. Terminal-Optionen die noch nicht in einem
+Alias verbaut sind, finden sich dann trotzdem noch recht schnell. Beim Blick auf den daily use verteilt sich die Nutzung von Code zu Fließtext im Verhältnis 30% Code zu 70% Fließtext.
+Der Code den ich baue ist größtenteils Python, Nix, Vimscript, Bash und Markdown. Die hier benutzten Sonderzeichen verhalten sich relativ gleich. Die Analyse zur Benutzung der
+Sonderzeichen werde ich mir zu einem späteren Zeitpunkt nochmal vornehmen, wenn das Grundgerüst des Layouts steht. Was ich nicht ganz außen vor lassen kann (und will) ist die Benutzung von XMonad als WM. Der braucht in meiner Config den GUI-Key zur Steuerung - aber auch dazu später mehr.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/diagram.png" width=350px></center><br>
+<br><br>
+Beim Fließtext wechsel ich zwischen Deutsch und Englisch. Hier liegt die Verteilung bei 60% Englisch und 40% Deutsch. Diese Überlegung hat den Grund, dass es relativ komfortabel ist
+Umlaute wie Ü, A, Ö direkt griffbereit zu haben, da diese doch relativ häufig auftreten. Da der Fließtext hier den größten Teil einnimmt, werde ich mich auch vorrangig an diesem
+orientieren. So ergibt sich eine Prioritätenliste von 1. DE Text, 2. EN Text, 3. Code. Den nächsten Schritt den ich gemacht habe ist der Vergleich der ersten beiden Prios.
+<br>
+<br>
+<h2>0x02 - VERGLEICH DE | EN</h2>
+<br>
+Wie können zwei Sprachen am besten verglichen werden? Brechen wir es runter auf das was bei beiden Sprachen identisch ist. Die benutzten Zeichen und deren Häufigkeit.
+Ich habe mir die Arbeit erspart diese Recherchen und Analysen selber durchzuführen. Genau das haben nämlich schon viele Menschen vor mir gemacht und auf deren Ergebnisse greif ich
+einfach zurück. Was ich verglichen habe, um ein einigermaßen valides Ergebnis zu bekommen, sind die Zeichen die in beiden Sprachen gleich sind. Ich habe also im deutschen die Umlaute
+ignoriert und nur die restlichen Keys verglichen. Die allgemeine Graphemhäufigkeit, also wie oft wird welcher Buchstabe benutzt, verteilt sich auf beide Sprachen wie folgt:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/zeichen_de_en.png" width=300px></center><br>
+<br>
+Beim ersten Blick darauf wird klar, dass einige Keys ähnlich oft benutzt werden. Das könnte daran liegen, dass die Sprachherkunft beider Sprachen sehr ähnlich ist. Wenn wir beide
+Sprachen direkt nebeneinander legen, sehen wir den Diff bzw. die Übereinstimmungen.
+Wenn wir uns den Aufbau des Keyboards anschauen, haben wir das oben schon erwähnte 3x5 Alphakey Cluster pro Seite. Die mittlere Reihe an Keys. Nennt sich Homerow.
+Dort ruhen die Finger, wenn sie mal nicht Tippen. Da diese reihe die Basis des Layouts ist, habe ich die 10 (bzw. 12) häufigsten Buchstaben genommen und die für die Homerow reserviert.
+<br><br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/diff.png" width=200px></center><br>
+<br><br>
+Die Homerow hat allerdings nur 10 Keys. Durch den Diff im Vergleich der beiden Sprachen entstehen aus den häufigsten 10 Keys schnell 12 Keys.
+Beide Sprachen unterscheiden sich bei <b>O/D</b> und bei <b>L/U</b>. Wie gesagt orientiere ich mich am englischen und behandel deutsch zweitrangig.
+Die Verteilung der Keys findet hier von Innen nach Außen. Grundlegend würde ich davon ausgehen, dass der Zeigefinger schlicht der stärkste ist und wir diesen auch anders
+belasten können als bspw. den kleinen Finger. Die zwei Keys die sich aus dem Diff ergeben, schiebe ich eine Row weiter runter, aber ebenfalls auf Position des Zeigefingers.
+So ergibt sich folgende Layoutbasis:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/homerow.png"></center><br>
+<br>
+Nun tippen wir aber nicht nur reine Buchstabenfolgen, sondern es gibt auch noch Bigramme und Trigramme die häufig getippt werden. Die Trigramme ignoriere ich vorerst. Eventuell
+schau ich mir die an, wenn ich ein etabliertes solides Basis-Layout habe. Also zu den Bigrammen. Bigramme sind Zeichenfolgen die sich regelmäßig wiederholen. Im Vergleich von
+Englisch und Deutsch sind die 10 häufigsten Bigramme folgende:
+<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/bigramme.png" width=200px></center><br>
+<br>
+Leider gibt es hier kaum Dopplungen zwischen EN und DE. Was ich gemacht habe um das ganze etwas einzudampfen, ist zu schauen welche Bigramme die gleichen Zeichen benutzen, aber
+in andere Reihenfolge. So z.B. <b>ER | RE</b> oder <b>IE | EI</b>. Danach habe ich das ganze nach Häufigkeit, mit Fokus auf EN sortiert. Daraus ergibt sich eine finale Liste von
+Bigrammen die sich wie folgt aufgliedert:
+<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/bigramme_final.png" width=200px></center><br>
+<br>
+Das nimmt natürlich Einfluss darauf wie die Keys im Alpha-Layout verteilt werden. Grundsätzlich ist es hand- und fingerschonender wenn die Zeichen der Bigramme auf beide Hände verteilt
+werden. Hier natürlich auch unter Berücksichtigung der allgemeinen Keyhäufigkeit und dem Diff zwischen Homerow und sekundären Keys.
+Nach etwas Hirnverbiegung und viel Club Mate hat es dann aber funktioniert. <br>
+<br>
+Weiter geht es mit der Verteilung der restlichen Keys. Diese Unterscheiden sich dann deutlicher als die ersten zehn Keys. Statt zwei Diffs haben wir hier nur noch zwei Übereinstimmungen.
+Aber auch hier würde ich die Verteilung der benutzten Keys, je weniger benutzt, desto weiter nach außen. So werden die schwächeren Finger geschont bzw. die Belastung ausgeglichen
+durch die zusätzliche Benutzung der Modifier Keys and den Außenseiten.
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/full_alpha_layout.png"></center><br>
+<br>
+Ich hab aus der schon erwähnten wunderbaren Community, noch ein Tool (<a href="https://clemenpine.github.io/keysolve-web/">LINK</a>)empfohlen bekommen, welches die benutzten Keys, nach Häufigkeit farblich hervorhebt und zusätzlich noch die Bi- und Trigramme analysiert. Im default macht das Tool das mit einem englischen Textkörper. Ich werde mir das mal anschauen 
+und vielleicht noch einen deutschen mit reinnehmen. Das ganze sieht dann für das KYB3R_KEYS Layout so aus:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/matrix_1.png" width=550px></center><br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/matrix_2.png" width=550px></center><br>
+<br>
+<br>
+<h2>0x03 - MODIFIER (THUMBCLUSTER)</h2>
+<br>
+Ohne die Modifier geht es natürlich nicht. Fangen wir an beim Thumbcluster. Also den drei Keys pro Seite die für den Daumen bestimmt sind. Viele sehen es anders aber ich find es super:
+<b>SPACE</b> auf der linken Seite und <b>ENTER</b> auf der rechten Seite und das auf den jeweils inneren Keys. Grade für Terminal-Kram ist das in meinem Fall sehr praktisch.
+Die mittleren Keys sind auf der linken Seite <b>SHIFT</b> und auf der rechten Seite <b>BACKSPACE</b>. Die beiden äußeren keys sind <b>ALT</b> links und rechts <b>ALT GR</b>.
+<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/thumbcluster.png"></center><br>
+<br>
+<br>
+Dann wären da noch die Modifier links und rechts außen. Also die Modifier die von den kleinen Fingern bedient werden. Hier orientiere ich mich zum einen an VIM und zum anderen an XMonad.
+So gibt es auf der linken Seite von oben nach unten <b>TAB</b>, <b>ESC</b> und <b>LGUI</b>. Da <b>ESC</b> in VIM recht häufig zum Einsatz kommt, wandert es hier in die Mitte damit die
+Aufwärtsbewegung des kleinen Fingers verringert werden. <b>LGUI</b> darunter ist der Mod-Key für XMonad. Mit diesem werden unter XMonad neue Terminal-Instnazen gestartet,
+Workspaces gewechselt, Tools zwischen Workspaces verschoben und und und. Die Abwärtsbewegung des kleinen Fingers ist etwas schonender als die Aufwärtsbewegung, deswegen die Position.
+Aber nicht nur der <b>LGUI</b> Key ist hier wichtig sondern auch Combos von <b>LGUI</b> mit <b>LSHFT</b> oder <b>ALT</b>. Das ganze ist hierarchisch
+in meiner <b>xmonad.hs</b> festgehalten:
+<br><br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/xmonad_aufbau.png" width=300px></center><br>
+<br>
+<br>
+Auf der rechten Seite sind die Mods von oben nach unten <b>DEL</b>, <b>STRG</b> und <b>RSHIFT</b>. <b>DEL</b> ist auf dieser Position gelandet, weil hier das Muskelgedächtnis nicht
+sonderlich umtrainiert werden muss. <b>STRG</b> ist wieder mittig um den Weg des kleinen Fingers kurz zu halten, da <b>STRG</b> ebenfalls recht oft benutzt wird. <b>RSHIFT</b>
+ist als Redundanz zum <b>LSHIFT</b> auf der linken Seite.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/mods_l_r.png"></center><br>
+<br>
+<br>
+<h2>0x04 - LAYER</h2>
+<br>
+Damit haben wir das eigentliche Basis-Layout. Nun ist ein 3x5 Alphakeycluster aber von Haus aus zu klein um Zeichen wie Ziffern, Sonderzeichen und Klammern abzubilden.
+Hier kommen verschiedene Layer zum Einsatz. Layer sind Ebenen zu denen per Tastendruck umgeschaltet werden kann, um die Keys im laufenden Betrieb ein anderes Mapping zu verpassen.
+Ich habe hier drei zusätzliche Layer zum eigentlichen Baselayer. Zum einen den <b>SYM-LAYER</b>, einen <b>NAV-LAYER</b>,einen <b>NUM-LAYER</b> und einen <b>F-KEY LAYER</b>.
+<br><br>
+Layer 1 ist der <b>SYM-LAYER</b>. Der kümmert sich um Klammern, Kommas, Semikolons und ähnliche Code-relevante Sonderzeichen.
+Bis <b>ver. 0.3</b> hatte ich eine symetrische Verteilung der Keys. Alle Keys befinden sich auf der linken Seite und werden mit press+hold des linken Key im Thumbcluster der
+rechten Seite aktiviert.<br>
+<br>
+Ich habe die <b>KYB3R_KEYS</b> mal im CCH!-Discord gepostet. Die Idee, die Symbole symetrisch auf der linken Seite anzuordnen, stieß eher auf - sagen wir - gemischte Gefühle.
+In dem Zuge hab ich mir den Sym-Layer nochmal zu Gemüte geführt. Die Analyse der Symbole ist genauso machbar wie die Analyse der Alphakeys. Da in Fließtext eher ein sehr kleiner
+Anteil an Sonderzeichen benutzt wird, finde ich Fließtext nicht representativ für Symbole. Die Symbole beziehen sich hier hauptsächlich auf Code, also nehmen wir doch auch Code
+zur Analyse. Eine wunderbare Übersicht der meistbenutzten Code-Sprachen gibts auf <a href="https://www.statista.com/statistics/793628/worldwide-developer-survey-most-used-languages/">STATISTA.COM</a>. Die meistgenutzten Sprachen sind hier <b>C / C++</b>, <b>PYTHON</b>,
+<b>HTML / CSS</b>, <b>BASH</b>, <b>RUST</b>, <b>HASKELL</b> und <b>GO</b>. Wenn ihr selber auf <b>STATISTA</b> geht, werdet ihr sehen, dass die Auswahl dort etwas abweicht von dem was
+ich hier heranziehe. Das hat den Grund das ich selber mit JAVA nichts zu tun habe und dann lieber noch HASKELL und BASH mit in den Topf werfe. Es bildet also nicht zu 100%
+die meistgenutzten Code Sprachen ab sondern variiert. Folgende zwei Parameter habe ich mir gesetzt:<br>
+<br>
+[-] Code von verschiedenen Projekten um unterschiedliche Codingstile abzubilden<br>
+[-] Mindestens 6000 Lines of Code<br>
+<br>
+Also hab ich mal Github, Gitlab und Codeberg durchforstet und hab für die einzelnen Sprachen folgende Messdaten generieren können:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/sym_projects.png"></center><br>
+<br>
+Diese Parameter ergeben sich aus reinem Code-Copy-Paste und einem einfachen <b>grep -c "." testat</b> (in diesem Fall wird die Häufigkeit des Punktes ermittelt). Die <b>grep</b>-Befehle
+für die einzelnen Symbole hab ich einfach in ein kleines Bash-Script geschmissen, damit ich das nicht von Hand machen muss. So kann ich mir das Ergebniss direkt so generieren, dass
+es kompatibel zu LibreOffice ist. Bei <b>grep</b> gibt es aber ein paar Besonderheiten, die beachtet werden müssen. Es kommt zu Anomalien bei der Zeichenanalyse. Das fällt deutlich auf
+wenn wir uns die Häufigkeit von <b>$</b> und <b>^</b> anschauen. Diese kommen mit einer auffälligen Häufigkeit vor. An dieser Stelle mal ein großes Dankeschön an <a href="https://chaos.social/@purox">PUROX</a>.
+<b>PUROX</b> hat mir nicht nur den Tipp mit <b>grep</b> gegeben, sondern mich auch darauf hingewiesen, dass besagte Zeichen auch EOL Symbole sein können und deswegen wahrscheinlich
+überdurchschnittlich oft auftauchen. In den Ergebnissen seht ihr das ganz gut:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/sym_01.png"></center><br>
+<br>
+Hier aufgelistet seht ihr die Symbolverteilung für die einzelnen Sprachen, aufsteigend nach Häufigkeit sortiert.
+Nun gibt es zwei Möglichkeiten das ganze in <b>KYB3R_KEYS</b> zu integrieren. Entweder ich bau eine Version die auf die Summe aller Sprachen optimiert ist oder ich bau sprachspeziefische
+Versionen. Das einfachste ist natürlich die Variante aus der Summe aller Sprachen. Die Gesamtverteilung über alle 7 Sprachen, ebenfalls aufsteigend nach Häufigkeit sortiert,
+sieht wie folgt aus:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/sym_complete.png" width="300"></center><br>
+<br>
+Optisch etwas aufgehübscht, sieht die Gesamtverteilung wie folgt aus. Wie bereits gesagt die Zeichen <b>$</b> und <b>^</b> können wir hier getrost ignorieren, da sie
+einerseits EOL markieren und andererseits nicht auf dem eigentlichen <b>SYM-LAYER</b> liegen.<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/sym_diagram.png" width="400"></center><br>
+<br>
+Bei der Verteilung der Symbole auf die Keys der linken Seite orientiere ich mich an der Vorgehensweise bei den Alphakeys. Ich gehe wieder vom Zeigefinger als stärkster Finger aus und
+die Stärke der Finger ist nach Außen hin abnehmend. Als Basis dient auch hier wieder die Homerow in der Mitte der Keys. So ergibt sich die Verteilung wie folgt:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/layer_sym.png" width="800"></center><br>
+<br>
+Diese Verteilung ist wie bei den anderen Layern ebenfalls eine Mischung aus Statistik und Bachgefühl.<br>
+Ich habe lange überlegt, ob ich sprachspezifische Sym-Layer bauen soll oder nicht. Letztendlich habe ich mich dagegen entschieden. In den meisten Fällen bleibt es nicht dabei
+das Mensch ausschließlich C/C++ coded oder nur Haskell und so weiter. Meistens fließen bspw. Bash-Scripts mit in den täglichen Ablauf und das wäre hinderlich hier ein auf eine andere
+Sprache abgestimmtes Layout zu benutzen. Deswegen schnapp ich mir den Durchschnitt und mache den zum Default in der <b>keymap.c</b>. Ich lasse allerdings die symetrische Vertielung
+weiterhin als auskommentierte Version mit im Design. So könnt ihr selber testen und überlegen welcher euch besser gefällt.
+<br><br>
+Der zweite Layer ist der <b>NAV-LAYER</b>. Der kümmert sich um die Navigation. Das heisst in meinem Fall Vimkeys. Umgeschaltet auf den <b>NAV-LAYER</b> wird mit dem
+rechte Key im linken Daumencluster und ebenfalls per press+hold.
+Dadurch werden unnatürliche Bewegungen der Finger verhindert. Der Daumen auf der linken Seite löst den Layer-Key aus und die rechte Hand kann den <b>NAV-LAYER</b> bedienen.
+<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/layer_nav.png"></center><br>
+<br>
+<br>
+Layer Nummer drei ist der <b>NUM-LAYER</b>. Der kümmert sich um die Ziffern und zusätzlich zu Sonderzeichen die sich bei einem Default QWERTY Layout auf den Ziffernkeys befinden.
+Umgeschaltet wird per mittlerem Thumbkey auf der rechten Seite. Die restlichen Keys bleiben leer. Auch hier wird per press+hold auf den Layer geschaltet.<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/layer_num.png"></center><br>
+<br>
+<br>
+Als ich mein Layout (noch in totaler Alpha Version) mal Menschen gezeigt habe, fiel dem <a href="https://corteximplant.com/@karlnepomuk">Frank (Telebrot)</a>) auf,
+dass es doch gar keine F-Keys gibt.
+Also die Keys F1 bis F12. Wir haben kurz darüber geredet, wofür er die Keys benutzt. Ich selber benutze nur F3 und der ist von mir selber auf diesen Key gemappt und
+öffnet NERDtree in VIM. Franks Usecase für die F-Keys: Umbenennung von Files, Website-Reload und Biosentry. Da <b>KYB3R_KEYS</b> fürs Terminal (und Terminal-Tools) optimiert ist,
+fällt bei mir das Umbennen von Files und der Reload weg. Den Bulk-Rename übernimmt bei mir ein Tool namens <b>VIMV</b> - darüber muss ich hier auch mal noch was schreiben. Den reload
+im Browser (qutebrownser) mach ich per <b>:reload</b>. Damit wären der Großteil der F-Key Belegungen hinfällig. Wenn da nicht das 1% Bios-Entry wäre.
+Das ist in der Tat ein valider Punkt. Deswegen bekommt <b>KYB3R_KEYS</b> einen F-Key-Layer. Er ist natürlich optional und solltet ihr ihn nicht brauchen, werft ihn raus.
+Die F-Keys verteilen sich auf der obersten Row von links nach rechts. Natürlich haben wir hier wieder nur 10 Keys zur Verfügung, deswegen rutschen F11 und F12 auf die Homerow.
+Aktiviert wird der Layer durch press+hold des <b>TAB</b> Keys in der linken Mod-Columns.
+Ich habe lange rumprobiert, wo ich den Layerswitch einbaue. Ursprünglich wollte ich ihn auf den mittleren Key des linken Daumenclusters packen. Leider ist da aber schon <b>LSHFT</b>.
+Da Shift bekanntlich per longpress + Buchstabe benutzt wird ist hier der Laywechsel per press+hold nicht möglich.
+Ich hatte auch im <a href="https://discord.gg/QvzwwagXZ8">CCH! Discord</a> gefragt was die anderen so benutzen würden und hab viele Möglichkeiten bekommen mit denen es auch gemacht werden
+könnte. Leider funktionierten die Optionen nicht so optimal für mich, deswegen die Entscheidung den Layerswitch auf <b>TAB</b> zu packen. Trotzdem ein riesen Dankeschön an die
+wunderbar flauschige Community.
+<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/layer_f.png"></center><br>
+<br>
+<br>
+Wenn alle Keys, Layer und Modifier verteilt sind ergibt das ganze ein wunderbares Layout, das (hoffentlich) viel Arbeit, Weg und Schmerzen spart. Ob das wirklich der Fall ist wird sich
+zeigen. Aktuell teste ich das ganze noch ausgiebig. Wenn es zu Änderungen kommt, werde ich sie hier im Post hinzufügen. Aber vorerst ist das hier mein gesamtes Layout:<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/full_layout.png" width="800"></center><br>
+<br>
+<h2>0x05 - TESTING</h2>
+<br>
+Die Theorie und Software steht damit. Jetzt geht es natürlich darum das ganze auch im Meatspcae zu testen und vor allem zu schauen ob das ganze so performt wie es soll.
+Es gibt verschiedene Möglichkeiten das ganze zu Testen. Dafür gibt es Tools die einem die größte Arbeit abnehmen. Aber bevor ich zu den Tools komme, werfen wir mal einen Blick
+auf das wichtigste - das eigene Gefühl. Jemand hat im CCH! Discord mal geschrieben, es sei völlig egal wie viel WPM man auf einem Keyboard erreicht, selbst mit 10WPM merkt man schnell ob
+ein Layout rund läuft oder ob es irgendwo hakt. In diesem ersten Schritt des testings fühlt sich <b>KYB3R_KEYS</b> ganz rund an (spätere Änderungen nicht ausgeschlossen).
+Dann geht's an die Tools die einem wertvolle Metriken liefern. Zum einen wäre da natürlich <a href="https://www.monkeytype.com">MONKEYTYPE</a>.
+Hier gibt's diverse optionen wie eure Tippgeschwindigkeit ermitteln
+könnt und eure Words-per-Minute (WPM) und nicht verzweifeln wenn anfangs die WPM im Keller sind, das ist normal bei neuen Layouts.
+<br>
+<br>
+<center><img src="https://www.nerdbude.com/images/kyb3r/monkeytype.png" width=400px></center><br>
+<br>
+<br>
+<h2>0x06 - FIRMWARE</h2>
+<br>
+Natürlich muss das ganze noch in Software gegossen werden. Wie auf allen meinen Boards realisieren wir das ganze in QMK, denn QMK ist gut!
+Ja es gibt auch VIAL - ich weiß - aber irgendwie mag ich die old-school-handkompilierte-QMK.
+Die QMK bietet ein nettes Command:<br>
+<br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+<pre>
+<ln><span class ="unixshell">qmk new-keymap -kb crkbd</span></ln>
+</pre>
+</div>
+<br>
+<br>
+Das legt eine komplett leere Keymap (in dem Fall für das CRKBD) an. Hier müssen dann nur noch die Keycodes für das <b>KYB3R_KEYS</b> Layout rein. Die Keycodes finden sich in
+der Doku zur QMK (<a href="https://docs.qmk.fm">HIER</a>). Die fertige Keymapfile erspare ich euch an dieser Stelle. die könnt ihr euch in der <b>keymap.c</b> selber anschauen.
+Ich hab die fertige Keymap (inkl. dem fertig kompilierten Files bereit zum flashen) auch hier verlink, so das ihr natürlich nicht alles selber von Hand bauen müsst.
+Wenn alles fertig ist, muss die Firmware noch auf das CRKBD. Dazu wird das Board an den Rechner gehängt und der Resetbutton gedrückt.
+Nun sollte das CRKBD von der QMK erkannt werden und ist bereit <b>KYB3R_KEYS</b> zu flashen.<br>
+<br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+<pre>
+<ln><span class ="unixshell">qmk flash -kb crkbd -km kyb3r_keys</span></ln>
+</pre>
+</div>
+<br>
+<br>
+Wenn alles durchgelaufen ist sollte <b>KYB3R_KEYS</b> auf eurer CRKBD wohnen und ihr könnt loslegen. Ich pack euch noch ein Cheatsheet mit allen Layern mit dazu.
+Mir hilft das ganz gut beim lernen und umgewöhnen.
+<br><br>
+<h2>0x07 - FAZIT (VORLÄUFIG)</h2>
+<br>
+Es ist etwas Aufwand sich Gedanken über ein eigenes Layout zu machen und es ist kein Projekt, das abgeschlossen werden kann. Es ändert sich immer irgendetwas.
+ABER! Es lohnt sich und macht Spaß sich mit seinem eigenen Tippverhalten auseinander zu setzen. Nun ist <b>KYB3R_KEYS</b> aber doch auf einen sehr spezifischen Anwendungsfall
+ausgerichtet: Eine Mischung aus CODE/TEXT und EN/DE dazu viel Terminal-Nutzung und VIM/VIM-like zentriert. Es wird bestimmt noch andere Menschen geben, die den gleichen Usecase haben,
+aber es wird nicht die Mehrheit sein. Das ist mir bewusst.
+<br><br>
+<h2>0x08 - FILES</h2>
+<br>
+Natürlich wollt ihr jetzt noch die Files die ich euch schmackhaft gemacht habe. Hier bitte:
+<br>
+<br>
+<b>[KYB3R_KEYS CHEATSHEET]</b>: <a href="">LINK</a><br>
+<b>[KYB3R_KEYS keymap.c]</b>: <a href="https://www.nerdbude.com/files/keymap.c">LINK</a><br>
+<b>[KYB3R_KEYS kyb3r_keys.hex]</b>: <a href="https://www.nerdbude.com/files/kyb3r_keys.hex">LINK</a><br>
+<br>
+<br>
+Habt Spaß damit!
+<br>
+<br>
+Ich bekomme doch recht viel Input. Deswegen gibt es jetzt hier auch eine explizites Dankeschön an alle die Input liefern:<br>
+<br>
+<span class="label">THX</span>
+<div id="cssyn">
+<pre>
+<a href="https://corteximplant.com/@karlnepomuk">Frank</a> :: <a href="https://corteximplant.com/@Nico">Nico</a> :: <a href="https://ruhr.social/@apfel">apfel</a> :: <a href="https://chaos.social/@amokleben">amokleben</a> :: <a href="https://github.com/dreipunkteinsvier">dreipunkteinsvier</a> :: <a href="https://social.tchncs.de/@KurantRubys">exen904</a> :: <a href="https://chaos.social/@purox">purox</a>
+</pre>
+</div>
+<br>
+<br>
+<span class="label">LINKS</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell"><a href="https://www.clickclackhack.de/082.html">KYB3R_KEYS im CCH!</a></span></ln>
+</pre>
+</div>
+<br>
+<br>
+<span class="label">EDIT</span>
+<div id="cssyn">
+<pre>
+<edit>[20231107]</edit> - Missing "F-Keys / "Typos
+<edit>[20231107]</edit> - Missing "-/_"
+<edit>[20231114]</edit> - EurKey Layout suggestion
+<edit>[20231116]</edit> - Change Symbol Layer
+<edit>[20231120]</edit> - Add results from keysolve web tool / adding thanks-section
+</pre>
+</div>
+<br>
+<br>
+<span class="label" id="changelog">CHANGE LOG</span>
+<div id="cssyn">
+<pre>
+<ln><span class ="unixshell">VER: 0.4 -- [20231116] -- Change Symbol layer</span></ln>
+<ln><span class ="unixshell">VER: 0.3 -- [20231107] -- Adding "-" and "_" to Sign-Layer</span></ln>
+<ln><span class ="unixshell">VER: 0.2 -- [20231106] -- Adding F-Key Layer</span></ln>
+<ln><span class ="unixshell">VER: 0.1 -- [20231101] -- Basic Layout</span></ln>
+</pre>
+</div>
+<br>
+<br>
+
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

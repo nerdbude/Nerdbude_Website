@@ -1,0 +1,249 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[mastodon] @0x17@corteximplant.com
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+
+    <meta property="og:url" content="https://www.nerdbude.com/vim_statusline.html">
+    <meta property="og:title" content="Vim Statusline">
+    <meta property="og:description" content="Die Vim Statusline im Eigenbau">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~ VIM STATUSLINE  ~~</h1></center>
+  <center><h2>** DIE DIY STATUSLEISTE **</h2></center>
+  <center><st>[VIM] | [20230622] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Dass ich gerne Vim benutze, ist kein Geheimnis. Vim zeichnet sich durch seine Erweiterbarkeit aus. So gibt es auch wunderbare Plugins und Module die die Statusleiste hübsch machen. Also die Leiste am unteren Rand von Vim die alle wichtigen Informationen beinhaltet. Klar, ich könnte zu <b>Airline</b> oder <b>Lightline</b> greifen ... oder die Statusline selber bauen. Also bau ich selber eine.
+<br>
+<br>
+<h2>0x01 - STATUSLINE</h2>
+<br>
+<center><img src="https://www.nerdbude.com/images/vimstatus.jpg"></center><br>
+<br>
+Die Statusline in Vim beinhaltet jede Menge Infos, die dabei helfen den Überblick zu behalten. So zum Beispiel welcher Modus gerade aktiv ist, Dateiname der geöffneten Datei, gibt es Änderungen im File, Fileformat, Encoding, Position des Cursors im File und so weiter. Wer es unkompliziert haben will, greift in dem Fall zu oben erwähnten Plugins, installiert die per Plugin Manager und hat Spaß damit. Wer allerdings nicht ganz zufrieden damit ist, baut sich seine Statusline selber in der <b>.vimrc</b> File. Das klingt zuerst unfassbar kompliziert und nach "OP am offenen Herzen", aber ich kann euch beruhigen. Es ist einfacher als gedacht.<br>
+<br>
+Wie so vieles, kann auch die Statusline in der <b>.vimrc</b> konfiguriert werden. Die <b>.vimrc</b> liegt per default in eurem $HOME Verzeichnis. Die <b>.vimrc</b> ist in VimScript geschrieben, aber trotzdem relativ gut zu lesen.<br>
+<br>
+<h2>0x02 - STATUSLINE AKTIVIEREN</h2>
+<br>
+Im ersten Schritt aktivieren wir die Statusline (wenn nicht schon passiert) mit folgendem Eintrag:<br>
+<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+	  <ln><span class="unixshell">set laststatus=2 </span></ln>
+	</pre>
+</div>
+<br><br>
+Damit habt ihr die nach dem Neustart von Vim die Statusline aktiviert. Nun geht es an den Content.
+Denn nach der einfachen aktivierung habt ihr nur eine weiße Statusline mit dem Filename. Das ist auf Dauer langweilig und wenig informativ.
+Um Module bzw. Infos zur Statusline hinzuzufügen, braucht es in der <b>.vimrc</b> folgenden Eintrag pro Element, dass hinzugefügt werden soll:<br>
+<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+	  <ln><span class="unixshell">set statusline= </span></ln>
+	</pre>
+</div>
+<br><br>
+Dahinter kommen unsere Module und Elemente die wir einfügen wollen. Meine Statusline beginnt mit einem kleinen Alien. Das sieht in der <b>.vimrc</b> so aus:<br>
+<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+	  <ln><span class="unixshell">set statusline= </span></ln>
+	  <ln><span class="unixshell">set statusline+=\  </span></ln>
+	</pre>
+</div>
+<br><br>
+Damit mehrere Elemente hintereinander in der Statusline angezeigt werden, wird hier zu <b>set statusline=</b> ein "+" hinzugefügt, also <b>set statusline+=</b>.
+Das war noch Spielerei und ist nicht wirklich essentiell für die Produktivität. Wichtiger ist dagegen der aktuelle Mode in dem Vim sich befindet und das am liebsten noch farbig. Hier braucht es etwas mehr.<br>
+<br>
+<h2>0x03 - VIM MODE</h2>
+<br>
+Um den Mode anzeigen zu können, in dem sich vim befindet, braucht es etwas mehr Scripting. Bevor wir also den Mode in der Statusline anzeigen lassen können, braucht es folgendes Script-Snippet in der <b>.vimrc</b>:<br>
+<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+	  <ln><span class="unixshell">let g:currentmode={</span></ln>
+	  <ln><span class="unixshell"> \ 'n' : 'NORMAL ',</span></ln>
+	  <ln><span class="unixshell"> \ 'v' : 'VISUAL ',</span></ln>
+	  <ln><span class="unixshell"> \ 'V' : 'V-LINE ',</span></ln>
+	  <ln><span class="unixshell"> \ 'i' : 'INSERT ',</span></ln>
+	  <ln><span class="unixshell"> \ 'R' : 'R ',</span></ln>
+	  <ln><span class="unixshell"> \ 'Rv' : 'V-REPLACE ',</span></ln>
+	  <ln><span class="unixshell"> \ 'c' : 'COMMAND ',</span></ln>
+	  <ln><span class="unixshell"> \}</span></ln>
+	</pre>
+</div>
+<br><br>
+Mit <b>let g:</b> werden die Variablen global angelegt, damit sie von überall erreichbar und abrufbar sind. Jetzt müssen die Modes noch an die Statusline weitergegeben werden:<br>
+<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+	  <ln><span class="unixshell">statusline+=\ %#NormalC#%{(mode()=='n')?'\ NORMAL\ ':''} </span></ln>
+	  <ln><span class="unixshell">statusline+=\ %#InsertC#%{(mode()=='i')?'\ INSERT\ ':''} </span></ln>
+	  <ln><span class="unixshell">statusline+=\ %#VisualC#%{(mode()=='v')?'\ VISUAL\ ':''} </span></ln>
+	</pre>
+</div>
+<br><br>
+Die Variablen <b>%#NormalC#%</b>, <b>%#InsertC'%</b> und <b>%#Visual#%</b> definieren hier die Colors die verwendet werden. Diese werden direkt aus dem benutzten Colorscheme gezogen. Hier erschließt sich ein großer Vorteil aus dem Statusline-Eigenbau. Wir haben hier die Möglichkeit die Colors direkt aus dem Vim-Theme zu ziehen und brauchen kein separates Statusline Colorscheme. Das kann unter Lightline bspw. recht hakelig sein (das erstellen des eigenen Vim Colorscheme steht hier auc hschon auf er Liste mit Sachen die ich mal niederschreiben muss).<br>
+Alienhead + Mode sind schon mal ganz schick aber die Statusline kann noch mehr. <br>
+<br>
+<h2>0x04 - MODULE</h2>
+<br>
+Wie ich weiter oben schon geschrieben habe gibt es diverse Module die wir in die Statusline einbauen können.
+Eine gute Übersicht aller Möglichkeiten bietet die Vim-Help.
+Hier könnt ihr euch Module aussuchen die ihr in eure Statusline einbauen könnt. Das Help-file zur Statusline findet ihr in Vim mir <b>:help statusline</b>. In meiner Statusline finden sich neben Alienhead und Modus auch Filename, Changes, Fileformat, Encoding und die Zeilenposition und Gesamtzeilenanzahl.
+Der nächste teil meiner <b>.vimrc</b> sieht wie folgt aus:<br>
+<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+    <ln><span class="unixshell">set statusline+=%#Filename#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %f</span></ln>
+    <ln><span class="unixshell">set statusline+=%#ReadOnly#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %r</span></ln>
+    <ln><span class="unixshell">set statusline+=%m</span></ln>
+    <ln><span class="unixshell">set statusline+=%=</span></ln>
+    <ln><span class="unixshell">set statusline+=%#Fileformat#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %y</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %{&fileencoding?&fileencoding:&encoding}</span></ln>
+    <ln><span class="unixshell">set statusline+=\ [%{&fileformat}\]</span></ln>
+    <ln><span class="unixshell">set statusline+=%#Position#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ [%l/%L]</span></ln>
+	</pre>
+</div>
+<br><br>
+Die klar lesbaren Variablen sind wieder die Colorcodes. Der Rest sind Variablen die in der Helpfile auch gelistet sind:<br>
+<br><br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+    <ln><span class="unixshell">%f  -- Filename</span></ln>
+    <ln><span class="unixshell">%r  -- Readonly</span></ln>
+    <ln><span class="unixshell">%m  -- Modified (y/n)</span></ln>
+    <ln><span class="unixshell">%=  -- Alles was folgt ist rechts in der statusline</span></ln>
+    <ln><span class="unixshell">%y  -- </span></ln>
+    <ln><span class="unixshell">%{&fileencoding?&fileencoding:&encoding}  -- Encoding</span></ln>
+    <ln><span class="unixshell">[%{&fileformat}\]  -- Fileformat</span></ln>
+    <ln><span class="unixshell">[%l/%L] -- Cursorline / Lines Total</span></ln>
+	</pre>
+</div>
+<br>
+<br>
+Und schon habt ihr eine brauchbare Statusline die nicht mehr ganz so fade aussieht und ihr habt euch ein Plugin gespart.
+<br>
+Die <b>.vimrc</b> ist enrom erweiterbar. Die meisten plugins machen nichts anderes, als Code der in die config passen würde auslagern. Nicht falsch verstehen - Plugins sind cool. Schau ich mir auch noch an - ich hab da schon ne lustige Idee, aber dazu mehr wenn es soweit ist. Als Abschluss pack ich euch hier noch die komplette Statusline noch rein.
+<br>
+Viel Spaß beim hacken eurer Statusline.<br>
+<br>
+<h2>0x05 - DIE KOMPLETTE STATUSLINE</h2>
+<br>
+<br>
+<br>
+<span class="label">.VIMRC</span>
+<div id="cssyn">
+	<pre>
+    <ln><span class="unixshell">"STATUSLINE</span></ln>
+    <ln><span class="unixshell">set laststatus=2</span></ln>
+    <ln><span class="unixshell">set noshowmode</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">"STATUSLINE MODE</span></ln>
+    <ln><span class="unixshell">let g:currentmode={</span></ln>
+    <ln><span class="unixshell">	\ 'n' : 'NORMAL ',</span></ln>
+    <ln><span class="unixshell">	\ 'v' : 'VISUAL ',</span></ln>
+    <ln><span class="unixshell">	\ 'V' : 'V-LINE ',</span></ln>
+    <ln><span class="unixshell">	\ "\<C-V>" : 'V-BLOCK' ,</span></ln>
+    <ln><span class="unixshell">	\ 'i' : 'INSERT ',</span></ln>
+    <ln><span class="unixshell">	\ 'R' : 'R ',</span></ln>
+    <ln><span class="unixshell">	\ 'Rv' : 'V-REPLACE ',</span></ln>
+    <ln><span class="unixshell">	\ 'c' : 'COMMAND ',</span></ln>
+    <ln><span class="unixshell">	\}</span></ln>
+    <ln><span class="unixshell"></span></ln>
+    <ln><span class="unixshell">set statusline=</span></ln>
+    <ln><span class="unixshell">set statusline+=%#Icon#</span></ln>
+    <ln><span class="unixshell">set statusline+=\  </span></ln>
+    <ln><span class="unixshell">set statusline+=\ %#NormalC#%{(mode()=='n')?'\ NORMAL\ ':''}</span></ln>
+    <ln><span class="unixshell">set statusline+=%#InsertC#%{(mode()=='i')?'\ INSERT\ ':''}</span></ln>
+    <ln><span class="unixshell">set statusline+=%#VisualC#%{(mode()=='v')?'\ VISUAL\ ':''}</span></ln>
+    <ln><span class="unixshell">set statusline+=%#Filename#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %f</span></ln>
+    <ln><span class="unixshell">set statusline+=%#ReadOnly#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %r</span></ln>
+    <ln><span class="unixshell">set statusline+=%m</span></ln>
+    <ln><span class="unixshell">set statusline+=%=</span></ln>
+    <ln><span class="unixshell">set statusline+=%#Fileformat#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %y</span></ln>
+    <ln><span class="unixshell">set statusline+=\ %{&fileencoding?&fileencoding:&encoding}</span></ln>
+    <ln><span class="unixshell">set statusline+=\ [%{&fileformat}\]</span></ln>
+    <ln><span class="unixshell">set statusline+=%#Position#</span></ln>
+    <ln><span class="unixshell">set statusline+=\ [%l/%L]</span></ln>
+	</pre>
+</div>
+<br><br>
+<br>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

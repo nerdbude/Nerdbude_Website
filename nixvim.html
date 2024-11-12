@@ -1,0 +1,176 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[mastodon] @0x17@corteximplant.com
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+
+    <meta property="og:url" content="https://www.nerdbude.com/nixvim.html">
+    <meta property="og:title" content="NIXVIM">
+    <meta property="og:description" content="VIM ABER VIA NIX">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~  NIXVIM  ~~</h1></center>
+  <center><h2>** VIM ABER VIA NIX **</h2></center>
+  <center><st>[VIM] | [20241112] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+<center><img src="https://www.nerdbude.com/images/nixvim/nixvim_01.png" width="500"></center>
+<br>
+Ich mag Vim. Das sollte mittlerweile den Menschen die hier mitlesen aufgefallen sein. Bis jetzt lief hier immer ein Vanilla-Vim mit diversen Anpassungen und Plugins. Regelmäßig spühlt es mir Vim-Distributionen und Forks in meine Feeds. Ich schau mir auch regelmäßig LunarVim, SpaceVim und wie sie alle heißen an, bleibe dann aber meistens bei meinem handgebautem <b>Vim</b> + <b>vimrc</b>. Nun kam aber was in mein Sichtfeld, was mich dann doch gehooked hat: <a href="https://github.com/nix-community/nixvim">NixVim</a>. 
+<br>
+<br>
+<h2>0x01 - OVERVIEW</h2><br>
+Was genau ist <b>NixVim</b>? <b>NixVim</b> ist laut eigenen Aussagen eine NeoVim Distribution, aber im Gegensatz zu ähnlichen Projekten wie <a href="https://lunarvim.org">LunarVim</a> oder <a href="https://spacevim.org">SpaceVim</a> baut <b>NixVim</b> darauf, komplett via Nix-Modules konfigurierbar zu sein. Das heisst NeoVim wird hier nicht als einzelnes Package installiert und per Dotfiles konfiguriert sondern als Modul in der <b>configuration.nix</b> behandlet wird. Das hat natürlich den großen Vorteil, dass bei einem Systemwechsel oder Neuinstallation einfach seine Vim-Config innerhalb der NixOS Config mitzieht und in kürzester Zeit seinen geliebten und voll konfigurierten Editor vor sich hat. 
+<br>
+<br>
+<h2>0x02 - INSTALLATION</h2><br>
+Die Installation von <b>NixVim</b> ist gewohnt einfach. In meinem Fall liegt ein File namens <b>"nixvim.nix"</b> im Config-Pfad von NixOS, da ich (immer) noch nicht auf Flakes und Homemanager gewechselt bin. Das File selber wird in der <b>configurations.nix</b> per Import aufgerufen:
+<br>
+<br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">imports = [./modules/nixvim.nix];</span></ln>
+  </pre>
+</div>
+<br>
+Das alleine reicht natürlich noch nicht. Innerhalb der <b>nixvim.nix</b> passiert das was <b>NixVim</b> bzw. NeoVim installiert und sich um Plugins, Themes und die Konfiguration kümmert:
+<br>
+<br>
+<span class="label">nixvim.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">let</span></ln>
+    <ln><span class="unixshell">    nixvim = import (builtins.fetchGit {</span></ln>
+    <ln><span class="unixshell">        url = "https://github.com/nix-community/nixvim";</span></ln>
+    <ln><span class="unixshell">    });</span></ln>
+    <ln><span class="unixshell">in</span></ln>
+    <ln><span class="unixshell">{ imports = [nixvim.nixosModules.nixvim];</span></ln>
+    <ln><span class="unixshell">programs.nixvim = {</span></ln>
+    <ln><span class="unixshell">    enable = true;</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+    <ln><span class="unixshell">}</span></ln>
+  </pre>
+</div>
+<br>
+Nach dem Rebuild und dem aufrufen von <b>$> nvim</b> läuft *magic* NeoVim.
+Yes! - aber es läuft völlig im default. Ich denke keine*r der Vim ernsthaft und regelmäßig benutzt, tut das im default. Was Vim und NeoVim interessant macht, ist die hohe Konfigurierbarkeit durch Plugins. NeoVim selber ist zum einen kompatibel mit Vim-Plugins (VimScript) aber baut auch eine eigene Schnittstelle für Plugins auf die mit NeoVim spezifischen Plugins interagieren kann (in dem Fall in Lua).
+<br>
+<br>
+<h2>0x03 - PLUGINS</h2><br>
+Aktuell befinden sich in den nix-packages <b>~1700</b> Pakete, die als <b>vimPlugins.***</b> gelistet sind. Es sollte also jedes Plugin verfügbar sein, dass ihr braucht. Beim default übernimmt der Plugin-Manager (Pathogen, Pack, Vundle usw.) die Installation und die Verwaltung der Plugins. Der Nachteil daran wird aber schnell sichtbar, wenn man mal sein Vim auf einem anderen System zum laufen bringen will. Nerviges nachinstallieren von Plugins und anderen Modulen, Configs etc. Zum Glück hat sich NixOS und damit auch <b>NixVim</b> Reproduzierbarkeit auf die Fahnen geschrieben. So können wir in Zukunft alle Plugins und Änderungen über die <b>nixvim.nix</b>. Eine übersichtliche Liste an Plugins und deren Config-Optionen bietet hier die Dokumentation von <b>NixVim</b> selber (<a href="https://nix-community.github.io/nixvim/">LINK</a>). Grundsätzlich folgt die Installation von Plugins folgendem Syntax: <b>plugins.pluginname.enable = true;</b> - also alles wie gewohnt. Wie ihr eure Plugins strukturiert ist völlig euch überlassen. Meine Plugins hab ich innerhalb der <b>nixvim.nix</b> wie folgt aufgebaut:<br>
+<br>
+<span class="label">nixvim.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">programs.nixvim = {</span></ln>
+    <ln><span class="unixshell">    plugins = {</span></ln>
+    <ln><span class="unixshell">        telescope = {</span></ln>
+    <ln><span class="unixshell">            enable = true;</span></ln>
+    <ln><span class="unixshell">        };</span></ln>
+    <ln><span class="unixshell">        alpha = {</span></ln>
+    <ln><span class="unixshell">            enable = true;</span></ln>
+    <ln><span class="unixshell">            theme = "dashboard";</span></ln>
+    <ln><span class="unixshell">        };</span></ln>
+    <ln><span class="unixshell">    };</span></ln>
+    <ln><span class="unixshell">}</span></ln>
+  </pre>
+</div>
+<br><br>
+So lassen sich alle Plugins strukturiert verwalten und das ganze noch reproduzierbar in nur einem <b>nix</b> File. 
+Nach dem gleichen Schema lauft das auch mit den Einstellungen bzw. den Basic-Einstellungen von NeoVim. 
+<br>
+<br>
+<h2>0x04 - CONFIG</h2><br>
+Ok. Plugins sind das eine - für grundlegende Einstellungen braucht es aber nicht immer Plugins. Manche Optionen gehören schlicht und ergreifend in die <b>vimrc</b> bzw. bei NeoVim in die <b>init.lua</b>. Wenn ich allerdings alles per NixOS Modul konfigurieren will, dann ohne Ausnahme. Also kommen NeoVim-Optionen nicht in ein separates File sondern ebenfalls in die <b>nixvim.nix</b>. Das ganze funktioniert ähnlich wie bei Plugins. So bringt NeoVim bzw. <b>NixVim</b> von Haus aus keine Linenumbers mit. Die sind allerdings recht praktisch - gerade in NeoVim:<br>
+<br>
+<span class="label">nixvim.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">opt = {</span></ln>
+    <ln><span class="unixshell">    number = true;</span></ln>
+    <ln><span class="unixshell">};</span></ln>
+  </pre>
+</div>
+<br>
+Statt dem <b>"plugins.{pluginname}.enable"</b> gehen wir hier den weg über <b>"opt.{optname}.true"</b>. So lassen sich Tabs, Cursorline, Splitverhalten, Linenumbers und so weiter konfigurieren. Alles unter der Option <b>"opt"</b>. 
+Was Vim/NeoVim so mächtig macht ist, die Möglichkeit alles über Keyboardshortcuts zu steuern. Keymappings lassen sich natürlich auch innerhalb der <b>nixvim.nix</b> steuern.
+<br>
+<br>
+<h2>0x05 - KEYMAPS</h2><br>
+Die Keycombos die Vim/NeoVim mit sich bringt, sind nicht immer optimal gewählt und man kommt doch recht schnell an den Punkt, an dem man manche Kombinationen gerne anders mappen möchte. Wie bei den Optionen bisher ist das natürlich auch in <b>NixVim</b> möglich. Auch hier tauschen wir einfach wieder <b>plugins.*</b> oder <b>opt.*</b> gegen <b>keymaps.*</b>. Keymaps sind ein kleinwenig komplexer und bestehen nicht mehr nur aus onelinern sondern werden per Submodul definiert aber es bleibt verständlich. So kann bspw. ESC darauf gemappt werden, im Normal-Mode das Searchhighlighting von <b>hlsearch</b> wieder zu deaktivieren:<br>
+<br>
+<span class="label">nixvim.nix</span>
+<div id="cssyn">
+  <pre>
+    <ln><span class="unixshell">keymaps = [</span></ln>
+	<ln><span class="unixshell"> {</span></ln>
+    <ln><span class="unixshell">  mode = "n";</span></ln>
+	<ln><span class="unixshell">  key = "&lt;ESC&gt;"</span></ln>
+	<ln><span class="unixshell">  action = "&lt;cmd&gt;nohlsearch&lt;CR&gt;";<span></ln>
+	<ln><span class="unixshell">}</span></ln>
+    <ln><span class="unixshell">];</span></ln>
+  </pre>
+</div>
+<br>
+<b>mode</b> definiert hier den Modus in dem das Mapping greift, in diesem Fall <b>n - Normal-Mode</b>, die Option <b>key</b> verweist auf den Key der benutzt werden soll und <b>action</b> definiert was passiert, in dem Fall das Aufheben der Markierung des gesuchten Strings. Mit diesen Submodulen sind alle Keycombos möglich die ihr so braucht. 
+<br>
+<br>
+<h2>0x06 - FAZIT</h2><br>
+Auch wenn sich der Wechsel von Vim zur NeoVim etwas befremdlich anfühlt, lohnt er sich. Sind wahrscheinlich eh nur nostalgische Gedanken die völlig haltlos sind, denn Vim bleibt ja trotzdem die Basis. Der Vorteil an NeoVim ist natürlich die breite Community, die hier mit- und weiterentwickelt aber auch der Wechsel von VimScript zu Lua bringt etwas Geschwindigkeit in Vim. Das ganze jetzt in Verbindung mit der zentralen Konfigurierbarkeit von <b>NixVim</b> ist ein Traum. Nie wieder nachinstallieren von Plugins oder ähnlichem. Nur Modul laden - fertig.<br>
+Happy Hacking! 
+<br>
+<br>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

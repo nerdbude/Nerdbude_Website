@@ -1,0 +1,414 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[mastodon] @0x17@corteximplant.com
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+
+    <meta property="og:url" content="https://www.nerdbude.com/hiy_v.html">
+    <meta property="og:title" content="HIY V: Matrix Synapse">
+    <meta property="og:description" content="Da cyberwa.re viel zu schnell wieder verschwunden ist, bau ich mir meinen eigenen NixOS Matrix Server.">
+
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<div id="titlebox">
+  <center><h1>~~  HIY V  ~~</h1></center>
+  <center><h2>** MATRIX SYNAPSE  **</h2></center>
+  <center><st>[PRO] | [20230816] | [20230817] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<div id="contentbox">
+<!-- ARTICLE START -->
+Als der allmächtige CORTEX IMPLANT Admin <a href="https://corteximplant.com/@revengeday">Ramses</a> den Matrix Server "cyberwa.re" startete war ich sehr glücklich. Leider ist <b>CYBERWA.RE</b> schneller wieder verschwunden als mir lieb war. Nachdem Gedanken selber einen NixOS Matrix-Server aufzusetzen kann ich auch verstehen warum :D.
+<br>
+<br>
+<h2>0x01 - MATRIX / SYNAPSE</h2>
+<br>
+Was ist Matrix überhaupt? Matrix ist ein dezentralisierter Chatservice mit der Möglichkeit Räume zu erstellen, benutzt E2EE und es gibt coole Terminalclients
+dafür (<a href="https://www.nerdbude.com/iamb.html">IAMB</a> zum Beispiel). Es gibt aktuell drei Möglichkeiten einen Matrix-Server zu betreiben.
+Synapse, Dendrite oder Conduit. [EDIT: Conduit kann Föderation]. Also bleiben noch Synapse und Dendrite. Dendrite ist in GO geschrieben und soll laut verschiedenen Aussagen
+deutlich besser performen als Synapse - allerdings bin ich mit meinem aktuellen Wissensstand nicht in der Lage Dendrite unter NixOS zum laufen zu bringen.
+Das folgt dann zu einem späteren Zeitpunkt. Also bleibt im Endeffekt nur Synapse.<br>
+<br>
+<br>
+<h2>0x02 - INFRASTRUKTUR</h2>
+<br>
+Natürlich braucht es hinter Matrix auch Blech. Matrix läuft bei mir nicht auf dem Main-Server, auf dem ihr den anderen Kram wie <b>NERDBUDE</b>, <b>CCH!</b>
+und so weiter finden könnt. Sondern auf einem separaten VPS. Meine Entscheidung kommt schlicht und ergreifend zu stande, weil ich die Arten von Infrastruktur
+gerne getrennt halte. Aktuell läuft Matrix-Synapse auf der kleinsten Kiste die Hetzner anbietet. Die Matrix Instanz soll nicht öffentlich sein und rein für mich.
+Von daher sollte die Config ausreichen. Domains braucht es natürlich auch. Also läuft der ganze Kram der nicht auf den Main Server soll, ab jetzt auf dem
+<b>KYB3R.SPACE</b>. Natürlich hat Hetzner NixOS noch nicht als Default OS im Sortiment, das muss also wieder von Hand drübergebügelt werden. Wie das
+funktioniert hatte ich bereits hier beschrieben: <a href="https://www.nerdbude.com/hiy_ii.html">HIY II - SPEZIFIKATION</a>. Wenn ihr also alles habt:
+NixOS, Domain und VPS kanns los gehen.<br>
+<br>
+<br>
+<h2>0x03 - INSTALLATION</h2>
+<br>
+Natürlich wollen wir nicht nur lokal installieren, sondern nutzen das wunderbare Potential von NixOS und bauen uns eine <b>configurations.nix</b> mit
+Matrix-Synapse.<br>
+Bei mir hat es bis zur funktionierenden Matrix-Synapse Instanz etwas gedauert (und Nerven gekostet - aber so funktioniert Lernen). Deswegen hier vorab kurz
+zu den Parts die wir benötigen um einen Matrix-Synapse Server aufzusetzen. Was wir brauchen sind die passenden DNS Eintries, SSL Zertifikate, einen
+funktionierenden NGINX Server, eine passende Subdomain auf er Matrix horcht, die passenden Firewall-Settings, einen Proxy für die Subdomain und das wars
+eigentlich. Bevor wir mit der eigentlichen Konfiguration anfangen, legen wir uns die passenden DNS entries an.<br>
+<br>
+<br>
+<h2>0x04 - DNS</h2>
+<br>
+Damit die Domain die IP findet und entsprechend weiterleitet, müssen passende DNS Entries angelegt werden. Als erstes kommen die A Einträge der
+Domain mit IP connected:<br>
+<br>
+<span class="label">DNS</span>
+<div id="cssyn">
+	<pre>
+	<ln><span class="unixshell">* A 0.0.0.0 3600</span></ln>
+	<ln><span class="unixshell">www A 0.0.0.0 3600</span></ln>
+	<ln><span class="unixshell">A 0.0.0.0 3600</span></ln>
+	<ln><span class="unixshell">m A 0.0.0.0 3600</span></ln>
+	</pre>
+</div>
+<br>
+Das setzt die Einträge für Subdomains, die www.kyb3r.space und für die Synapse Sub <b>m.kyb3r.space</b>. Aber Synapse braucht auch noch einen SRV Eintrag:<br>
+<br>
+<span class="label">DNS</span>
+<div id="cssyn">
+	<pre>
+	<ln><span class="unixshell">_matrix._tcp.kyb3r.space SRV 10 8448 m.kyb3r.space 5 3600</span></ln>
+	</pre>
+</div>
+<br>
+Damit leiten wir die <b>kyb3r.space</b>, sobald Matrix-Traffic reinkommt, an die Subdomain <b>m.kyb3r.space</b> weiter.
+Ihr müsst natürlich die IP Adressen (0.0.0.0) gegen eure eigenen ausstauschen. Wenn die DNS entries gemacht sind geht es weiter mit der eigentlichen Konfiguration.
+<br>
+<br>
+<h2> 0x05 - CONFIGURATION.NIX</h2>
+<br>
+Was ich noch nie wirklich gemacht habe, was aber definitiv sinnvoll ist, ist die Konfiguration für NixOS zu modularisieren anstatt alles in einer
+<b>configuration.nix</b> zu pflegen. So hab ich zumindest mal Synapse aus der eigentlichen Config rausgekratzt und in <b>/modules/synapse.nix</b> gepackt.
+Aber fangen wir vorne an, bei der <b>configuration.nix</b>.<br>
+In die <b>configuration.nix</b> kommen die Konfigurationen für User, SSH, Firewall, NGINX, Zertifikate und natürlich der Link zur <b>synapse.nix</b>.
+<br><br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+<pre>
+<ln><span class="unixshell">{ config, pkgs, ... }: </span></ln>
+<ln><span class="unixshell">let </span></ln>
+<ln><span class="unixshell">   fqdn = "m.kyb3r.space";</span></ln>
+<ln><span class="unixshell">   clientConfig."m.homeserver".base_url = "https://${fqdn}";</span></ln>
+<ln><span class="unixshell">   serverConfig."m.server" = "${fqdn}:443";</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">in</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">{</span></ln>
+<ln><span class="unixshell">  imports = [</span></ln>
+<ln><span class="unixshell">    ./hardware-configuration.nix</span></ln>
+<ln><span class="unixshell">    ./modules/synapse.nix</span></ln>
+<ln><span class="unixshell">    </span></ln>
+<ln><span class="unixshell">  ];</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">  boot.tmp.cleanOnBoot = true;</span></ln>
+<ln><span class="unixshell">  zramSwap.enable = true;</span></ln>
+<ln><span class="unixshell">  networking.hostName = "NB-ES-03";</span></ln>
+<ln><span class="unixshell">  networking.domain = "";</span></ln>
+<ln><span class="unixshell">  services.openssh.enable = true;</span></ln>
+<ln><span class="unixshell">  users.users.root.openssh.authorizedKeys.keys = [</span></ln>
+<ln><span class="unixshell">    ''ssh-rsa your-ssh-key'' </span></ln>
+<ln><span class="unixshell">  ];</span></ln>
+</pre>
+</div>
+<br>
+Im ersten Block werden Variablen für Synapse definiert. Die <b>$fqdn</b> ist die Subdomain, die Synapse später nutzen soll und <b>clientConfig ...</b> und
+<b>serverConfig ...</b> sind Sachen die synapse später braucht. Danach kommen die Imports, hier zum einen die bekannte <b>hardware.nix</b>für den
+Hardwarekram der Kiste auf der der Server läuft und natürlich die <b>synapse.nix</b> die sich dann um den eigentlichen Synapse Server kümmert.
+Der letzte Block konfiguriert die üblichen Parameter für NixOS wie SSH Key, Host-Name usw.<br>
+Der nächste Block ist dann schon etwas individueller. Hier geht es um den <b>NGINX</b> den wir für das Hosting brauchen.<br>
+<br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+	<pre>
+<ln><span class="unixshell">services.nginx = {</span></ln>
+<ln><span class="unixshell">enable = true;</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">    recommendedTlsSettings = true;</span></ln>
+<ln><span class="unixshell">    recommendedOptimisation = true;</span></ln>
+<ln><span class="unixshell">    recommendedGzipSettings = true;</span></ln>
+<ln><span class="unixshell">    recommendedProxySettings = true;</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">    virtualHosts."kyb3r.space" = </span></ln>
+<ln><span class="unixshell">     let </span></ln>
+<ln><span class="unixshell">      client = </span></ln>
+<ln><span class="unixshell">        { "m.homeserver"      = { "base_url" = "https://m.kyb3r.space"; };</span></ln>
+<ln><span class="unixshell">          "m.identity_server" = { "base_url" = "https://matrix.org"; };</span></ln>
+<ln><span class="unixshell">        };</span></ln>
+<ln><span class="unixshell">      server = { "m.server" = "m.kyb3r.space:443"; };</span></ln>
+<ln><span class="unixshell">    in</span></ln>
+<ln><span class="unixshell">   {</span></ln>
+<ln><span class="unixshell">      enableACME = true;</span></ln>
+<ln><span class="unixshell">      forceSSL = true;</span></ln>
+<ln><span class="unixshell">      root = "/var/www/kyb3r";</span></ln>
+<ln><span class="unixshell">      locations."/.well-known/matrix/server".extraConfig = ''
+<ln><span class="unixshell">          add_header Content-Type application/json;
+<ln><span class="unixshell">          return 200 '${builtins.toJSON server}';
+<ln><span class="unixshell">      '';
+<ln><span class="unixshell">      locations."/.well-known/matrix/client".extraConfig = ''
+<ln><span class="unixshell">          add_header Content-Type application/json;
+<ln><span class="unixshell">          add_header Access-Controll-Allow-Origin *;
+<ln><span class="unixshell">          return 200 '${builtins.toJSON client}';
+<ln><span class="unixshell">      '';
+<ln><span class="unixshell">    };</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">    virtualHosts."www.kyb3r.space" = {</span></ln>
+<ln><span class="unixshell">      enableACME = true;</span></ln>
+<ln><span class="unixshell">      forceSSL = true;</span></ln>
+<ln><span class="unixshell">      root = "/var/www/kyb3r/";</span></ln>
+<ln><span class="unixshell">    };</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">    virtualHosts."m.kyb3r.space" = </span></ln>
+<ln><span class="unixshell">      let </span></ln>
+<ln><span class="unixshell">        client = </span></ln>
+<ln><span class="unixshell">          { "m.homeserver"      = { "base_url" = "https://m.kyb3r.space"; };</span></ln>
+<ln><span class="unixshell">            "m.identity_server" = { "base_url" = "https://matrix.org"; };</span></ln>
+<ln><span class="unixshell">          };</span></ln>
+<ln><span class="unixshell">        server = { "m.server" = "m.kyb3r.space:443"; };</span></ln>
+<ln><span class="unixshell">      in</span></ln>
+<ln><span class="unixshell">      {</span></ln>
+<ln><span class="unixshell">        enableACME = true;</span></ln>
+<ln><span class="unixshell">        forceSSL = true;</span></ln>
+<ln><span class="unixshell">        locations."/_matrix".proxyPass = "http://localhost:8448";</span></ln>
+<ln><span class="unixshell">        locations."/_synapse".proxyPass = "https://localhost:8448";</span></ln>
+<ln><span class="unixshell">      };		</span></ln>
+<ln><span class="unixshell">       };</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">    security.acme.acceptTerms = true;</span></ln>
+<ln><span class="unixshell">    security.acme.certs = {</span></ln>
+<ln><span class="unixshell">    "kyb3r.space".email = "post@kyb3r.space";</span></ln>
+<ln><span class="unixshell">    "www.kyb3r.space".email = "post@kyb3r.space";</span></ln>
+<ln><span class="unixshell">    "m.kyb3r.space".email = "post@kyb3r.space";</span></ln>
+<ln><span class="unixshell">    };</span></ln>
+</pre>
+</div>
+<br>
+Hier starten wir NGINX (wie genau der init abläuft, hatte ich <a href="https://www.nerdbude.com/hiy_iii.html">HIER</a> schon mal beschrieben).
+Wir lassen NGINX drei Instanzen hosten:<br>
+<br>
+- kyb3r.space<br>
+- www.kyb3r.space<br>
+- m.kyb3r.space<br>
+<br>
+Die ersten beiden sind als reines Webinterface gedacht (irgendwas bau ich da bestimt noch hin) und die dritte ist die Schnittstelle zu Synapse.
+Die Konfiguration der ersten beiden ist eine Standart-Konfiguration für eine Website. Bei der Synapse-Subdomain sieht die Konfigurationen
+etwas anders aus. Hier geben wir der Subdomain mittels <b>locations.</b> noch Pfade mit, die von Synapse benötigt werden, um zu funktionieren.<br>
+Im letzten Block der noch übrig ist, kommt der normale SSL Zertifikats Foo der notwendig ist um die SSL-Certs für die Domains auszuliefern.
+Was jetzt noch in der <b>configuration.nix</b> fehlt, sind die Firewall settings:<br>
+<br>
+<span class="label">CONFIGURATION.NIX</span>
+<div id="cssyn">
+	<pre>
+<ln><span class="unixshell">networking.firewall = {</span></ln>
+<ln><span class="unixshell">enable = true;</span></ln>
+<ln><span class="unixshell">allowedTCPPorts = [ 22 80 443 ];</span></ln>
+<ln><span class="unixshell">allowedUDPPortRanges = [</span></ln>
+<ln><span class="unixshell">  { from = 4000; to = 4007; }</span></ln>
+<ln><span class="unixshell">  { from = 8000; to = 8010; }</span></ln>
+<ln><span class="unixshell">];</span></ln>
+<ln><span class="unixshell">};  </span></ln>
+</pre>
+</div>
+<br>
+Hier machen wir die nötigen TCP und UDP Ports auf. Port 22 für SSH, 80 für den Webkram und 443 für Synapse.
+Damit steht mal das Grundgerüst - also der Webserver - und wir können uns Synapse zuwenden.<br>
+<br>
+<h2>0x06 - SYNAPSE</h2>
+<br>
+Jetzt kommt der Punkt der mir diverse schlaflose Nächte und hirnschmelzende Stunden beschert hat. Am Ende war der Fehler aber, wie meistens unter NixOS, unfassbar einfach auszumachen.<br>
+Also zu Synapse. Synapse ist in den NixOS Packages mit der aktuellsten Version drin, es braucht also keine Hacks um das ganze zum laufen zu bringen.
+Den Anfang in der <b>synapse.nix</b> macht die Datenbank, denn ohne die läuft nix. In den meisten Tutorials (und von Matrix selber) wird PostgresQL empfohlen, da es deutlich performanter ist als reines SQL oder andere.
+Dann hören wir mal auf Matrix und nehmen PostgresQL:<br>
+<br>
+<span class="label">SYNAPSE.NIX</span>
+<div id="cssyn">
+	<pre>
+<ln><span class="unixshell">    { pkgs, lib, config, ... }:</span></ln>
+<ln><span class="unixshell">    {</span></ln>
+<ln><span class="unixshell">      services.postgresql.enable = true;</span></ln>
+<ln><span class="unixshell">      services.postgresql.initialScript = pkgs.writeText "synapse-init.sql" ''</span></ln>
+<ln><span class="unixshell">        CREATE ROLE "matrix-synapse" WITH LOGIN PASSWORD 'password';</span></ln>
+<ln><span class="unixshell">        CREATE DATABASE "matrix-synapse" WITH OWNER "matrix-synapse"</span></ln>
+<ln><span class="unixshell">          TEMPLATE template0</span></ln>
+<ln><span class="unixshell">          LC_COLLATE = "C"</span></ln>
+<ln><span class="unixshell">          LC_CTYPE = "C";</span></ln>
+<ln><span class="unixshell">      '';</span></ln>
+</pre>
+</div>
+<br>
+Mit <b>services.postgresql.enable = true;</b> aktivieren wir das Packet PostgresQL und geben dem Paket mit <b>services.postgresql.initialScript = pkgs.writeText "synapse-init.sql"</b>
+direkt die Commands mit, die wir brauchen, um eine Datenbank und einen User anzulegen. <b>CREATE ROLE</b> legt den User an und <b>CREATE DATABASE</b> legt die eigentliche Datenbank an und weißt mit <b>OWNER</b> auch gleich den Besitzer zu.
+Soweit noch ganz einfach. Aber nur einfach ist langweilig, deswegen kommt jetz tder <b>SYNAPSE</b> Part der Config.
+<br>
+<br>
+<span class="label">SYNAPSE.NIX</span>
+<div id="cssyn">
+	<pre>
+<ln><span class="unixshell">services.matrix-synapse = {</span></ln>
+<ln><span class="unixshell">  enable = true;</span></ln>
+<ln><span class="unixshell">  settings.server_name = "m.kyb3r.space";</span></ln>
+<ln><span class="unixshell">  settings.enable_metrics = true;</span></ln>
+<ln><span class="unixshell">  settings.registration_shared_secret_path = "/path/to/secret";</span></ln>
+<ln><span class="unixshell">  settings.database.name = "psycopg2";</span></ln>
+<ln><span class="unixshell">  settings.database.args = {</span></ln>
+<ln><span class="unixshell">      user = "matrix-synapse";</span></ln>
+<ln><span class="unixshell">      password = "password";</span></ln>
+<ln><span class="unixshell">  };</span></ln>
+<ln><span class="unixshell">  settings.listeners = [</span></ln>
+<ln><span class="unixshell">    {</span></ln>
+<ln><span class="unixshell">      bind_addresses = [ "localhost" ];</span></ln>
+<ln><span class="unixshell">port = 8448;</span></ln>
+<ln><span class="unixshell">tls = false;</span></ln>
+<ln><span class="unixshell">     resources = [</span></ln>
+<ln><span class="unixshell">        { compress = true; names = ["client" "federation"]; }</span></ln>
+<ln><span class="unixshell">  { compress = false; names = [ "federation" ]; }</span></ln>
+<ln><span class="unixshell">      ];</span></ln>
+<ln><span class="unixshell">type = "http";</span></ln>
+<ln><span class="unixshell">x_forwarded = false;</span></ln>
+<ln><span class="unixshell">    }</span></ln>
+<ln><span class="unixshell">    {</span></ln>
+<ln><span class="unixshell">bind_addresses = [ "127.0.0.1" ];</span></ln>
+<ln><span class="unixshell">port = 8008;</span></ln>
+<ln><span class="unixshell">resources = [ { compress = true; names = [ "client" "federation" ]; }</span></ln>
+<ln><span class="unixshell">];</span></ln>
+<ln><span class="unixshell">tls = false;</span></ln>
+<ln><span class="unixshell">type = "http";</span></ln>
+<ln><span class="unixshell">x_forwarded = true;</span></ln>
+<ln><span class="unixshell">    }</span></ln>
+<ln><span class="unixshell"></span></ln>
+<ln><span class="unixshell">  ];</span></ln>
+<ln><span class="unixshell">};</span></ln>
+<ln><span class="unixshell">}</span></ln>
+</pre>
+</div>
+<br>
+Diese Stück Konfiguration hat mich Zeit gekostet. Die meisten Tutorials die im Internet zu finden sind, sind mittlerweile out-dated von 2020 oder noch älter.
+In NixOS hat sich seit dem aber einiges getan und auch die Konventioneni, Synapse Konfigurationen mitzugeben hat sich grundlegend geändert. So zumindest bei Synapse.
+Der Vorteil liegt deutlich auf der Hand. Vor der Änderung wurde das <b>registration_shared_secret</b> in Klartext (!!!) in der Config definiert. Das will eigentlich niemand wirkllich haben.
+Für mich konnte ich zwei Varianten (ja - es gibt noch andere Möglichkeiten Keys zu deployen) den Key zur Verfügung zu stellen, ausfindig machen.
+Zum einen unterstützt <b>services.matrix-synapse</b> den Parameter <b>settings.registration_shared_secret_path = "/path/to/secret";</b>.
+Dadurch kann der Key in ein separates File geschrieben werden und Synapse wird mit der Nase auf die Key-File gestoßen.<br>
+Das File ist recht simple zu erstellen:<br>
+<br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+  <pre>
+  <ln><span class="unixshell">nix-shell -p pwgen</span></ln>
+  <ln><span class="unixshell">pwgen -s 64 1 &gt; /path/to/file/matrix-shared-secret</span></ln>
+  </pre>
+</div>
+<br>
+So habt ihr <b>pwgen</b> nicht im System rumhängen.
+Ok - was macht die Config jetzt genau.<br>
+Wir starten den Service <b>services.matrix-synapse</b> mittels <b>enable = true;</b> und definieren danach weitere Parameter.
+Angefangen bei <b>settings.server_name = "m.kyb3r.space";</b> welches unseren Servernamen definiert und <b>settings.enable_metrics = true;</b> schreibt Metriken
+mit, die sehr hilfreich sein können beim Debuggen. Später kann das Feature deaktiviert werden - wir wollen ja datensparsam sein ;)<br>
+Wie weiter oben schon beschrieben verweisst <b>settings.registration_shared_secret_path</b> auf den Pfad zum shared_secret.<br>
+<br>
+Als nächstes auen wir die Verbindung zur Datenbank auf. Der Parameter <b>settings.database.name = "psycopg2";</b> teilt Synapse mit, dass hier eine PostgresQL im Hintergrund läuft.
+Mit <b>settings.database.args = { user = "matrix-synapse"; password = "password"; };</b> geben wir natürlich auch noch die Login-Credentials mit. Damit sollte der connect zur Datenbank stehen.<br>
+Der Rest der Config erstellt Listener die die Ports 8448 und 8008 and die localhosts binden und sich so um die Verbindung zu Client und die Förderation kümmern.<br>
+That's it. Wenn ihr alles so konfiguriert könnt ihr per Rebuild das Ganze zum Laufen bringen:<br>
+<br>
+<span class="label">TERMINAL</span>
+<div id="cssyn">
+	<pre>
+	<ln><span class="unixshell">nixos-rebuild switch</span></ln>
+	</pre>
+</div>
+<br>
+Wenn alles geklappt hat, solltet ihr jetzt einen funktionalen Synapse Homeserver vor euch haben. Wenn ihr euch jetzt einen Matrix Client eurer Wahl schnappt und euch einen Account
+auf eurer Instanz erstellen wollt, werdet ihr merken, dass der Server den wir hier konfiguriert haben, nicht dazu gedacht ist, dass sich jede*r einen Account erstellen kann.
+Es gibt zwar die Möglichkeit öffentliche Registrierung zu aktivieren, ich will das persönlich aber nicht auf meinem Server haben.
+Ihr könnt aber per Terminal ganz einfach einen User registrieren.<br>
+<br>
+<h2>0x07 - USER REGISTRIEREN</h2>
+<br>
+Einen laufenden Synapse-Server zu haben, birgt schon ein gewisses Maß an Zufriedenheit, aber natürlich macht das ganze auch nur wirklich Sinn, wenn wir da einen Account haben. Da das öffentliche Registrieren deaktiviert ist, erledigen wir das ganze per Terminal.
+Dazu bringt Synapse das Tool <b>"register_new_matrix_user"</b> mit. Es gibt zwei Möglichkeiten dieses Tool zu nutzen. Nr. #1 ihr sucht unter <b>/nix/store/</b>
+den richtigen Eintrag, oder - und das geht deutlich schneller und unkomplizierter - ihr bedient das ganze per <b>nix-shell -p matrix-synapse</b>:<br>
+<br>
+<span class="label">NIX-SHELL -P MATRIX-SYNAPSE</span>
+<div id="cssyn">
+	<pre>
+	<ln><span class="unixshell">register_new_matrix_user -c /PFAD/ZUR/CONFIG/ http://localhost:8008</span></ln>
+	</pre>
+</div>
+<br>
+Das registriert einen neuen User (inkl. Passwort und Adminrechten bei Bedarf) auf eurem Synapse-Server. Das wichtige hier ist das der <b>/PFAD/ZUR/CONFIG/</b> natürlich nicht der Pfad zu eurer NixOS Configuration, sondern den Pfad zur Synapse-Configfile. An den Pfad zur Config kommt ihr ran, wenn ihr euch <b>matrix-synapse.service</b> anschaut. Darin ist der komplette Pfad definiert.<br>
+<br>
+Wenn die Registrierung ohne Fehler durchläuft - sind wir fertig und können den eigenen Matrix-Synapse-Homeserver nutzen.
+<br>
+<br>
+<h2>0x08 - FAZIT</h2>
+<br>
+Alles in allem ist die Konfiguration von Matrix-Synapse relativ schnell und ohne viel Aufwand erledigt. Leider sind die Tutorials im Netz alle recht veraltet. Nur der Eintrag im <a href="https://nixos.org/manual/nixos/stable/index.html#module-services-matrix-synapse">NixOS Manual</a> ist aktuell und hilft weiter. Mit meiner Config habt ihr alles was ihr braucht um euren eigenen Server zu hosten und privat für euch zu betreiben. Sollte ich mich doch mal dafür entscheiden, die Registrierung öffentlich zu machen, werde ich euch natürlich auf dem laufenden halten, ansonsten könnt ihr euch die Config-Paramter aus dem Netz ziehen.
+<br><br>
+<h2>0x09 - DANKESCHÖN</h2>
+<br>
+Wie ich hier jetzt schon mehrfach erwähnt habe, war es etwas Arbeit das ganze zum laufen zu bringen. Ganz alleine hab ich das (auch wenn ich das gern gwollt hätte) nicht geschafft. Diverse nette Menschen aus dem Internetz haben mir wertvolle Tips gegeben, die es dann doch noch möglich gemacht haben, meinen eigenen
+Synapse-Server zu bauen. Deswegen hier ein riesiges Dankeschön an:<br>
+<br>
+- <a href="https://chaos.social/@0x4A6F">0x4AxF</a> (Federation fails)<br>
+- <a href="https://chaos.social/@pinpox">pinpox</a> (Config Samples und hint zu Dendrite - was ich mir auch noch anschauen werde)<br>
+- <a href="https://chaos.social/@fleaz">fleaz</a> (für den Hinweis, dass LetsEncrypt ein Timeout bei der Cert-Vergabe hat (5 Versuche / Stunde))<br>
+- <a href="https://mastodon.catgirl.cloud/@sophie">spohie</a> (für den Vorschlag "workers" in Verbindung mit Synapse zu verwenden, auch das schau ich mir zeitnah an)<br>
+<br>
+Dankeschön :)
+<br>
+<br>
+EDIT<br>
+<edit>[20230817]</edit> - Conduit kann Föderation [<a href="https://chaos.social/@fleaz">fleaz</a>]
+<br>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>

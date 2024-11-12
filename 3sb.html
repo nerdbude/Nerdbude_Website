@@ -1,0 +1,136 @@
+<!--
+8"""8 8"""" 8"""8  8""""8 8""""8   8   8 8""""8 8""""
+8   8 8     8   8  8    8 8    8   8   8 8    8 8
+8e  8 8eeee 8eee8e 8e   8 8eeee8ee 8e  8 8e   8 8eeee
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88    88   8 88   8 88     8 88  8 88   8 88
+88  8 88eee 88   8 88eee8 88eeeee8 88ee8 88eee8 88eee
+
+[website] https://www.nerdbude.com
+[mail] post@nerdbude.com
+[twitter] @PH_0x17
+[github] https://www.github.com/nerdbude
+ -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NERDBUDE</title>
+    <meta charset="utf-8" />
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@PH_0x17">
+    <meta property="og:url" content="https://www.nerdbude.com/3sb.html">
+    <meta property="og:title" content="3SB - SIMPLE STATIC SITE BUILDER">
+    <meta property="og:description" content="Ein kleines Blogframework für die NERDBUDE ">
+    <meta property="og:image" content="https://www.nerdbude.com/images/fav.png">
+    <link rel="icon" type="image/png" href="https://www.nerdbude.com/images/fav.png">
+    <link rel="alternate" href="https://nerdbude.com/rss/rss.xml" type="application/rss+xml" title="NERDBUDE"/>
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="screen">
+</head>
+
+<body>
+
+<!--- HEADER -->
+<!-- ARTIKLE START -->
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+<br>
+<!-- FIRST EDIT HERE -->
+<div id="titlebox">
+  <center><h1>~~ 3SB ~~</h1></center>
+  <center><h2>** SIMPLE STATIC SITE BUILDER **</h2></center>
+  <center><st>[COD] | [20230131] | [0] | [0x17]</st></center>
+</div>
+<br>
+<br>
+<hr>
+<br>
+<!-- Insert Content here -->
+<div id="contentbox">
+<!-- ARTICLE START -->
+<center><img src="https://www.nerdbude.com/images/3sb/3sb_logo.png"></center>
+Bevor es mit dem NixOS Server (<a href="https://www.nerdbude.com/hiy_i.html">HIY I</a>, <a href="https://www.nerdbude.com/hiy_ii.html">HIY II</a>) weiter geht, braucht es etwas Reorganisiation der <b>NERDBUDE</b>.
+Aus diesem Grund ist dieser  Post ein klein wenig anders und besonders.
+Es ist der erste Post der durch den <b>3SB</b> gebaut wurde.
+Wenn ihr es nicht auf Mastodon gelesen habt, dann fragt ihr euch mit Sicherheit was denn <b>3SB</b> sein soll.
+<br>
+Ich fang bei den roots an. Die <b>NERDBUDE</b> basiert auf einzelnen .html files und natürlich den .css und .xml files für styling und feeds, aber die lassen
+wir einfach mal außen vor. Hier soll es um die .html Struktur gehen.
+Die ist zugegebenermaßen mehr als chaotisch ist und Struktur wäre wohl auch das falsche Wort.
+So toll und faszinierend das Chaos ist, es birgt auch zusätzlichen Aufwand und Arbeit und die will sich der gemeine Hacker sparen.
+Die zusätzliche Arbeit zeigt sich ganz schnell, wenn mal ein Menü-Punkt geändert werden soll oder eine Kleinigkeit im Footer.
+Wenn alles static ist und auf einzelnen Files basiert, muss der neue Menü-Punkt bspw. händisch in jedem einzelnen File eingefügt werden.
+Das kostet Zeit - viel Zeit. Also hab ich mich umgeschaut, welche CMS es in freier Wildbahn gibt, dass nur genau das macht und nicht mehr, und musste feststellen, dass keines der CMS sich ausschließlich
+um die Struktur kümmert. Ich will hier schließlich nicht irgendwelche Themes verbiegen, damit die <b>NERDBUDE</b> aussieht, wie sie aussieht.
+Ich will das Design das hier gewachsen ist und kein anderes. OK - genug des Rants. Was ich hier schon länger auf der Liste habe ist das eigene CMS und das ist besagtes <b>3SB</b>
+<br>
+<h3>STRUKTUR</h3>
+<br>
+Zum Beginn steht natürlich die Überlegung wie die neue Struktur aussehen soll. Die ist nach ein wenig Ausprobieren auch schnell gefunden.
+Ich werde in Zukunft die einzelnen Parts der <b>NERDBUDE</b> modulasieren. Was heißt das konkret?
+<br><br>
+<center><img src="https://www.nerdbude.com/images/3sb/3sb_structure.png" width=300px></center>
+<br><br>
+Es wird Module geben für die HEAD Daten, für das Menü, für den eigentlichen Post und den Footer. Außerdem werden die Posts separat (mit bereits vorhandener HTML Struktur) abgelegt.
+Wenn diese Module vorhanden sind, können dann je nach command, dass in <b>3SB</b> benutzt wird, Posts gebaut werden, Menüs oder Footer geändert werden.
+Damit ihr euch meine wirren Gedanken besser vorstellen könnt, geh ich hier mal alle Befehle durch und erzähle kurz was im Hintergrund passiert.
+<br><br>
+<h3>3SB >>> init</h3>
+Der Befehl "init" startet einen neuen Post. Hier werden Post-Title, Post-Subtitle und Release-Date abgefragt. Wenn die drei Parameter vergeben sind, wandert der Post
+in die Queue an offenen Posts.
+<br><br>
+<center><img src="https://www.nerdbude.com/images/3sb/3sb_init.png"></center>
+<br><br>
+<h3>3SB >>> status</h3>
+Der Befehl "status" gibt einen Überblick über die aktuelle Struktur aus. So zum Beispiel die Gesamtzahl der Posts, die noch offnene Posts und etwas mehr.
+<br><br>
+<center><img src="https://www.nerdbude.com/images/3sb/3sb_status.png"></center>
+<br><br>
+<h3>3SB >>> edit</h3>
+Jetzt geht es ans Eingemachte, nämlich die Posts auch mit Inhalt zu befüllen. Der Befehl "edit" steht für "edit post". Nach Eingabe des Befehls wird abgefragt welcher Post bearbeitet werden soll.
+Hierzu wird einfach der Name der unter "show" ausgegeben wird, eingegeben. Daraufhin öffnet sich Vim und der Post kann beliebig bearbeitet werden. Mit ":wq" wird Vim beendet und der post gespeichert.
+<br><br>
+<center><img src="https://www.nerdbude.com/images/3sb/3sb_edit.png"></center>
+<br><br>
+<h3>menu / footer / header</h3>
+Ähnlich verhält es sich mit den Befehlen "menu", "footer" und "header". Diese drei commands editieren jeweils den Footer, Header und das Menu.
+Diese Funktion ist die Basis, wenn sich was im Menü, im Footer oder im Header etwas grundlegend ändert und diese Änderung später auf die gesamte Website ausgeweitet werden soll.
+<br><br>
+<h3>build</h3>
+Damit später alles an der richtige Stelle ist, gibt es "build". Hier werdet ihr wieder abgefragt welcher Post gebaut werden soll. Es wird wieder das Eingabeformat das "show" ausgibt, benutzt.
+Beim Build des Posts passiert folgendes im Hintergrund. <b>3SB</b> nimmt sich den Post und merged die "header.html", "menu.html" und die "footer.html" einfach dazu.
+So ist die statische Seite für den einzelnen Post erstellt. Damit wäre der Post fertig und bereit zum Upload.
+<br><br>
+<h3>deployf / deploym</h3>
+Diese zwei Optionen rollen die jeweiligen Files auf die gesamte Struktur aus. So ergibt sich der Vorteil, dass wenn ein neuer Menüpunkt auf die Seite soll, nicht händisch durch alle Files durchgegangen werden muss, sondern das ganze mit einem Command erledigt werden kann.
+Die geänderten Files müssen dann natürlich noch auf den Server geschoben werden und können dann live gehen.
+<br><br>
+<h3>FINAL WORDS</h3>
+Ich hab Zeit investiert und mich umgeschaut nach CMS Software, die mir nur die Files sortiert und erstellt ohne Datenbank, PHP, Java, JS oder ähnliches im Background und mir zusätzlich das Style komplett überlässt ohne Theming.
+Kurz und knapp - ich hab nichts gefunden was in die Richtung geht. Deswegen ist der <b>3SB</b> entstanden. Es ist keine black magic die im Hintergrund läuft und mit Sicherheit auch kein Hochkomplexes Code-Konstrukt, aber es erfüllt seinen Zweck, baut mir die <b>NERDBUDE</b> und spart mir Zeit.
+Natürlich ist noch Potential da. Vielleicht kommt bald die Möglichkeit, Posts direkt zu übersetzen für die EN Variante, oder Markdown als Postbasis und und und. Die Basis steht auf jedenfall schon mal und auf der kann ich aufbauen.
+Vielleicht braucht ja wer von euch auch eine kleine einfache Lösung.
+<br><br>
+Wenn ihr euch das anschauen wollt, gibt's das ganze natürlich auch auf GitHub:<br>
+<a href="https://github.com/nerdbude/3sb">3SB auf GitHub</a>
+<!-- ARTIKEL ENDE -->
+<br>
+<div id="backbar">
+  <b>[~] </b><a href="https://www.nerdbude.com">BACK</a>
+</div>
+<br>
+<br>
+  <!-- Footer -->
+
+  <div id="footer">
+    <table>
+      <th><a href="https://www.nerdbude.com/impressum.html">[IMPRESSUM]</a> <a target="_blank" href="https://www.nerdbude.com/datenschutz.html">[DATENSCHUTZ]</th>
+      <th></th>
+    </table>
+  </div>
+
+</body>
+</html>
