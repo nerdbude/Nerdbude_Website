@@ -1,11 +1,15 @@
 <p align="center">
-  <img src="/img/website.png" width="500" />
+  <img src="/img/logo.png" width="300" />
 </p>
 
 <h1 align="center">$NERDBUDE</h1>
 <p align="center">This is the complete website-structure. Build as a static html website.</p>
 
 [MASTODON](https://chaos.social/@nerdbude) | [WEBSITE](https://www.nerdbude.com)
+
+<p align="center">
+  <img src="/img/website.png" width="500" />
+</p>
 
 ## Usage 
 If you want to use this as your website just copy the files to your webspace. 
