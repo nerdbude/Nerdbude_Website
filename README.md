@@ -6,7 +6,7 @@
 <p align="center">This is the complete website-structure. Build as a static html website.</p>
 
 <p align="center">
-[MASTODON](https://chaos.social/@nerdbude) | [WEBSITE](https://www.nerdbude.com) 
+<a href="https://chaos.social/@nerdbude"> MASTODON </a> | <a href="https://www.nerdbude.com"> WEBSITE </a> 
 </p>
 
 <p align="center">
